@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2014 IRD
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title layout:title-pattern="$DECORATOR_TITLE | $CONTENT_TITLE">Observatoire Thonier</title>        
+        <meta name="description" content="description" />
+        <meta name="author" content="Julien Lebranchu - IRD/OT" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!--IE Compatibility modes-->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <link rel="icon" th:href="@{/assets/img/favicon.ico}" />
+        <!--Mobile first-->
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" th:href="@{/assets/lib/bootstrap/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" href="../../assets/lib/datatables/3/dataTables.bootstrap.css" 
+              th:href="@{/assets/lib/datatables/3/dataTables.bootstrap.css}"/>    
+
+
+        <link rel="stylesheet" th:href="@{/assets/css/curieuse.css}"/>
+        <link rel="stylesheet" th:href="@{/assets/css/apps.css}"/>
+
+        <!--Modernizr 2.8.2-->
+        <script th:src="@{/assets/lib/modernizr/modernizr.min.js}"></script>        
+
+        <!-- Custom Fonts -->
+        <link rel="stylesheet" th:href="@{/assets/lib/font-awesome/css/font-awesome.min.css}"/>
+        <!--TODO : download fonts in local dir-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
+        <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'/>
+        <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'/>
+        <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'/>
+
+
+    </head>
+
+    <body layout:fragment="body-content">
+    </body>
+
+</html>
+

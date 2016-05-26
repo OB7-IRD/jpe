@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2015 IRD
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  
+      xmlns:tiles="http://www.thymeleaf.org" lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  
+      layout:decorator="layouts/main">
+    <head>
+        <title>Tiles</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+
+        <div th:fragment="generate(activities)" th:remove="tag">
+            <div th:each="activity : ${activities}" th:remove="tag" >
+                <div th:switch="${activity.type}">
+                    <p th:case="${T(fr.ird.jpe.web.common.Activity).STATISTIC}" th:remove="tag">
+                        <span th:replace="helpers/tiles :: stats(activity=${activity})"></span> 
+                    </p>
+                    <p th:case="${T(fr.ird.jpe.web.common.Activity).EXECUTE}" th:remove="tag">
+                        <span th:replace="helpers/tiles :: execute(activity=${activity})"></span> 
+                    </p>
+                    <p th:case="${T(fr.ird.jpe.web.common.Activity).LISTING}" th:remove="tag">
+                        <span th:replace="helpers/tiles :: listing(activity=${activity})"></span> 
+                    </p>
+                    <p th:case="${T(fr.ird.jpe.web.common.Activity).REPORT}" th:remove="tag">
+                        <span th:replace="helpers/tiles :: report(activity=${activity})"></span> 
+                    </p>
+                    <p th:case="${T(fr.ird.jpe.web.common.Activity).REFERENTIEL}" th:remove="tag">
+                        <span th:replace="helpers/tiles :: referentiel(activity=${activity})"></span> 
+                    </p>
+                    <p th:case="${T(fr.ird.jpe.web.common.Activity).OBSERVE}" th:remove="tag">
+                        <span th:replace="helpers/tiles :: observe(activity=${activity})"></span> 
+                    </p>
+                    <p th:case="${T(fr.ird.jpe.web.common.Activity).ERS}" th:remove="tag">
+                        <span th:replace="helpers/tiles :: ers(activity=${activity})"></span> 
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div th:fragment="stats(activity)" th:remove="tag">
+            <a class="tile wide imagetext bg-color-greenDark action" th:href="@{${activity.uri}}" href="#">
+                <div class="image-wrapper">
+                    <span class="fa fa-dashboard fa-4x"></span>
+                </div>
+                <div class="app-label" th:text="#{${activity.label}}">app label</div>
+                <div class="app-count"></div>
+            </a>
+        </div>
+
+        <div th:fragment="listing(activity)" th:remove="tag">
+            <a class="tile app imagetext bg-color-blueDark action" th:href="@{${activity.uri}}" href="#">
+                <div class="image-wrapper">
+                    <span class="fa fa-list-alt fa-4x"></span>
+                </div>
+                <div class="app-label" th:text="#{${activity.label}}">app label</div>
+                <div class="app-count"></div>
+            </a>
+        </div>       
+
+        <div th:fragment="execute(activity)" th:remove="tag">
+            <a class="tile app imagetext bg-color-red action" th:href="@{${activity.uri}}" href="#">
+                <div class="image-wrapper">
+                    <span class="fa fa-play-circle-o fa-4x"></span>
+                </div>
+                <!--                <div class="column-text">
+                                    <div class="text4">Base de donnée</div>
+                                </div>-->
+                <div class="app-label" th:text="#{${activity.label}}">app label</div>
+                <div class="app-count"></div>
+            </a>
+        </div>               
+
+
+        <div th:fragment="report(activity)" th:remove="tag">
+            <a class="tile app imagetext bg-color-orange action" th:href="@{${activity.uri}}" href="#">
+                <div class="image-wrapper">
+                    <span class="fa fa-file-o fa-4x"></span>
+                </div>
+                <!--                <div class="column-text">
+                                    <div class="text4">Base de donnée</div>
+                                </div>-->
+                <div class="app-label" th:text="#{${activity.label}}">app label</div>
+                <div class="app-count"></div>
+            </a>
+        </div>        
+
+        <div th:fragment="referentiel(activity)" th:remove="tag">
+            <a class="tile app imagetext bg-color-grayLight action" th:href="@{${activity.uri}}" href="#">
+                <div class="image-wrapper">
+                    <span class="fa fa-database fa-4x"></span>
+                </div>
+                <!--                <div class="column-text">
+                                    <div class="text4">Base de donnée</div>
+                                </div>-->
+                <div class="app-label" th:text="#{${activity.label}}">app label</div>
+                <div class="app-count"></div>
+            </a>
+        </div>       
+
+        <div th:fragment="observe(activity)" th:remove="tag">
+            <a class="tile wide imagetext bg-color-blue" href="#" th:href="@{${activity.uri}}">
+                <div class="image-wrapper">
+                    <span th:class="${'fa '+T(fr.ird.jpe.web.common.IconConstant).AKADO_OBSERVE_ICONS+' fa-4x'}"></span>
+                </div>
+                <div th:if="${activity.description}" th:remove="tag">
+                    <div class="column-text">
+                        <div class="text" th:text="#{${activity.description}}">Top 10</div>                    
+                    </div>
+                </div>
+                <div class="app-label" th:text="#{${activity.label}}">app label</div>
+            </a>
+        </div>       
+
+        <div th:fragment="ers(activity)" th:remove="tag">
+            <a class="tile wide imagetext bg-color-blue" href="#" th:href="@{${activity.uri}}">
+                <div class="image-wrapper">
+                    <span th:class="${'fa '+T(fr.ird.jpe.web.common.IconConstant).AKADO_ERS_ICONS+' fa-4x'}"></span>
+                </div>
+                <div th:if="${activity.description}" th:remove="tag">
+                    <div class="column-text">
+                        <div class="text" th:text="#{${activity.description}}">Top 10</div>                    
+                    </div>
+                </div>
+                <div class="app-label" th:text="#{${activity.label}}">app label</div>
+            </a>
+        </div>       
+
+
+    </body>
+
+</html>

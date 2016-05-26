@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2014 IRD
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"  
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  
+      layout:decorator="layouts/main">
+    <head>
+        <title th:text="#{service.menu.label.aas}">Title</title>
+    </head>
+
+
+    <body>
+
+        <div id="header"  layout:fragment="header-content">
+            <header id="header" class="jumbotron apps-spacer">                          
+                <h2>
+                    <i class="fa fa-shield"></i>                            
+                    <span th:text="#{title.aas}" th:remove="tag"></span>
+                </h2>
+
+                <p th:text="#{label.aas.description}">A description</p>
+
+            </header>
+
+        </div>
+        <div layout:fragment="primary-content">
+            <section id="aas">
+                <div class="row row-center">
+                    <div class="aas-container">
+                        <div  contenteditable="false">
+                            <div class="col-md-4 aas-component">
+                                <h3> <i class="fa fa-users"></i> 
+                                    <span th:text="#{label.aas.user}">Starter</span>
+                                </h3>
+
+                                <p th:text="#{aas.user.description}"></p>
+                                <div class="">
+                                    <a href="#" th:href="@{${T(fr.ird.jpe.web.controller.AASController).AAS_LIST_USER_URI}}" class="btn btn-info btn-rect">
+                                        <i class="fa fa-list-alt"></i>
+                                        <span th:text="#{label.action.list}"></span>
+                                    </a>&nbsp;&nbsp;
+                                    <a href="#" th:href="@{${T(fr.ird.jpe.web.controller.AASController).AAS_ADD_USER_URI}}" class="btn btn-success btn-rect">
+                                        <i class="fa fa-plus"></i>
+                                        <span th:text="#{label.action.add}">Add</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 aas-component">
+                                <h3> <i class="fa fa-sitemap"></i> 
+                                    <span th:text="#{label.aas.role}">Starter</span>
+                                </h3>
+                                <p th:text="#{aas.role.description}"></p>
+                                <div class="">
+                                    <a href="#" th:href="@{${T(fr.ird.jpe.web.controller.AASController).AAS_LIST_ROLE_URI}}" class="btn btn-info btn-rect">
+                                        <i class="fa fa-list-alt"></i>
+                                        <span th:text="#{label.action.list}"></span>
+                                    </a>&nbsp;&nbsp;
+                                    <a href="#" th:href="@{${T(fr.ird.jpe.web.controller.AASController).AAS_ADD_ROLE_URI}}" class="btn btn-success btn-rect">
+                                        <i class="fa fa-plus"></i>
+                                        <span th:text="#{label.action.add}">Add</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 aas-component">
+                                <h3> <i class="fa fa-key"></i> 
+                                    <span th:text="#{label.aas.authorization}">Starter</span>
+                                </h3>
+                                <p th:text="#{aas.auth.description}"></p>
+                                <div class="">
+                                    <a href="#" th:href="@{${T(fr.ird.jpe.web.controller.AASController).AAS_LIST_AUTH_URI}}" class="btn btn-info btn-rect">
+                                        <i class="fa fa-list-alt"></i>
+                                        <span th:text="#{label.action.list}"></span>
+                                    </a>&nbsp;&nbsp;
+                                    <a href="#" th:href="@{${T(fr.ird.jpe.web.controller.AASController).AAS_ADD_AUTH_URI}}" class="btn btn-success btn-rect">
+                                        <i class="fa fa-plus"></i>
+                                        <span th:text="#{label.action.add}">Add</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>                    
+                    </div>
+                </div>
+            </section>
+            <div layout:fragment="secondary-content">                    
+            </div>
+
+
+        </div>
+
+        <div layout:fragment="javascript-extends" th:remove="tag">
+        </div>
+    </body>
+</html>

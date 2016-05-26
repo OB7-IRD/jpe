@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2014 IRD
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"  
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorator="layouts/default"
+      lang="en">
+    <head>
+        <title th:text="${'ERROR '+status}"></title>
+    </head>
+
+    <body layout:fragment="body-content" id="ErrorBox">
+        <div class="container error">
+            <div class="col-lg-8 col-lg-offset-2 text-center">
+                <div class="logo">
+                    <h1 th:text="${status}">Error</h1>
+                </div>
+                <p class="lead text-muted" th:text="${message}">There is no message.</p>
+                <div class="clearfix"></div>
+                <br/>
+                <div class="col-lg-6  col-lg-offset-3">
+                    <div class="btn-group btn-group-justified">
+                        <a th:href="@{/}" class="btn btn-info" th:text="#{common.navigation.backto.main}">Return to the main page</a> 
+                    </div>
+                </div>
+            </div><!-- /.col-lg-8 col-offset-2 -->
+
+        </div>
+    </body>
+</html>

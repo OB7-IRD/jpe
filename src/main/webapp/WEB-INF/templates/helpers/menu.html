@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2014 IRD
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  
+      xmlns:tiles="http://www.thymeleaf.org" lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+      layout:decorator="layouts/main">
+    <head>
+        <title>Menu</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <div th:fragment="profile(user)" th:remove="tag">
+            <div id="top-info" >
+                <div shiro:notAuthenticated="">
+                    <ul class="nav navbar-nav pull-right">
+                        <li>
+                            <a id="login-user" href="#" th:href="@{${T(fr.ird.jpe.web.controller.LogController).LOGIN_URI}}"><span th:text="#{global.login}" th:remove="tag"></span>
+                                <i class="fa fa-sign-in"></i>
+                            </a>
+                        </li>                     
+                    </ul>
+                </div>
+                <div shiro:authenticated="">
+                    <ul class="nav navbar-nav pull-right">
+                        <li class='dropdown '>
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                                <span th:text="${user.firstname +'&nbsp;' + user.lastname}">FirstName LastName</span>
+                                <b class="caret"></b><br/><i class="fa fa-calendar"></i>&nbsp;<span th:text="#{label.last.access}" th:remove="tag">Last Access</span>:
+                                <small>
+                                    <span th:text="${user.lastAccess == null ? #dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm') : #dates.format(user.lastAccess, 'dd MMM yyyy HH:mm')}" th:remove="tag">16 Mar 16:32</span>
+                                </small> 
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+
+                                    <a id="settings" href="#" th:href="@{${T(fr.ird.jpe.web.controller.PreferencesController).PREFERENCE_URI}}">
+                                        <i class="fa fa-cog"></i>
+                                        <span th:text="#{label.preferences}" th:remove="tag"></span>
+                                    </a>
+                                </li>
+                                <li> 
+                                    <a id="logout-user" href="#" th:href="@{${T(fr.ird.jpe.web.controller.LogController).LOGOUT_URI}}">
+                                        <i class="fa fa-sign-out"></i>
+                                        <span th:text="#{global.logout}" th:remove="tag"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div shiro:hasRole="administrator" class=" pull-right">
+                        <div  th:replace="helpers/menu :: nav(menu=${beans.navigationUtils.getAdminMenu()})"  th:remove="tag"></div>
+                    </div>
+                </div>
+            </div>           
+        </div>
+
+        <div th:fragment="nav (menu)" th:remove="tag">
+            <ul class="nav navbar-nav pull-left">
+                <div th:each="item : ${menu.items}" th:remove="tag" >
+                    <li th:id="${item.htmlId}" th:if="${#lists.isEmpty(item.children)}" >
+                        <a th:href="@{${item.uri}}">
+                            <i th:if="${item.icon != ''}" class="fa" th:attrappend="class=${' ' + item.icon}"></i>
+                            <span class="link-title" th:text="'&nbsp;'+#{${item.label}}">&nbsp;Title</span> 
+                        </a>
+                    </li>
+                    <li th:unless="${#lists.isEmpty(item.children)}" class="dropdown">
+                        <a th:href="@{${item.uri}}"  class="dropdown-toggle" data-toggle="dropdown">
+                            <i th:if="${item.icon != ''}" class="fa" th:attrappend="class=${' ' + item.icon}"></i>
+                            <span class="link-title" th:text="'&nbsp;'+#{${item.label}}">&nbsp;Title</span> 
+                            <b th:if="${not #lists.isEmpty(item.children)}" class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li th:each="child : ${item.children}">
+                                <a th:if="${not #strings.isEmpty(child.uri)}" th:href="@{${child.uri}}">
+                                    <span th:text="#{${child.label}}" th:remove="tag">&nbsp; Link Item</span>
+                                    <!--<span th:if="${not #lists.isEmpty(child.children)}" class="fa fa-arrow"></span>-->
+                                </a>
+                                <!--<div th:replace="helpers/menu :: subnav(children=${child.children}, depth=${depth+1})"  />-->
+                            </li>
+                        </ul>
+                    </li>
+                </div>                
+            </ul>
+        </div>
+
+        <div th:fragment="getLanguageSelector" th:remove="tag">
+            <ul class="nav navbar-nav pull-left">
+                <!--Language selector-->
+                <li class='dropdown '>
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                        <span th:text="#{common.navigation.language}" th:remove="tag">&nbsp;Dropdown title</span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li th:each="locale: ${beans.navigationUtils.getLocales()}">
+                            <a th:href="@{'?language='+${locale.key}}">
+                                <img th:src="@{'/assets/img/flags/'+${locale.key}+'.png'}" th:alt="${locale.key}"/> &nbsp;<span th:text="${locale.value}"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>

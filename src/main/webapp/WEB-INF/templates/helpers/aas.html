@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2014 IRD
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  
+      xmlns:tiles="http://www.thymeleaf.org" lang="en">
+    <head>
+        <title>Menu</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+
+        <div th:fragment="users(list)" th:remove="tag">
+            <table id="userTable" class="table responsive-table">
+                <thead>
+                    <tr>
+                        <th class="col-sm-2 text-center" data-th-text="#{label.field.firstname}">Prénom</th>
+                        <th class="col-sm-1 text-center" data-th-text="#{label.field.lastname}">Nom de famille</th>
+                        <th class="col-sm-1 text-center" data-th-text="#{label.field.email}">Mail</th>
+                        <th class="col-sm-1 text-center" data-th-text="#{label.field.login}">Login</th>
+                        <th class="col-sm-2 text-center" data-th-text="#{label.action}">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-th-each="data : ${list}">
+                        <td data-th-text="${data.getFirstname()}">First name</td>
+                        <td data-th-text="${data.getLastname()}">Last name</td>
+                        <td data-th-text="${data.getEmail()}">Email</td>
+                        <td data-th-text="${data.getLogin()}">Login</td>
+                        <td style="text-align: center;" >
+                            <a href="#" data-th-href="@{${T(fr.ird.jpe.web.controller.AASController).AAS_EDIT_USER_URI+'?id='+data.getId()+''}}">
+                                <button type="button" class="btn btn-primary btn-xs">
+                                    <i class="fa fa-edit"></i>
+                                    <span th:remove="tag" th:text="#{label.action.edit}">&nbsp;&nbsp;Edit</span>
+                                </button>
+                            </a>&nbsp; 
+                            <a href="#" th:href="${isUsed} ? '#' : @{${T(fr.ird.jpe.web.controller.AASController).AAS_DELETE_USER_URI+'?id='+data.getId()+''}}" >
+                                <button type="button" class="btn btn-danger btn-xs" th:classappend="${isUsed}? 'disabled'" >
+                                    <i class="fa fa-remove"></i>
+                                    <span th:remove="tag" th:text="#{label.action.delete}">&nbsp;&nbsp;delete</span>
+                                </button>
+                            </a>
+                        </td>                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:fragment="roles(list)" th:remove="tag">
+            <table id="roleTable" class="table responsive-table">
+                <thead>
+                    <tr>
+                        <th class="col-sm-2 text-center" data-th-text="#{label.field.name}">Nom</th>
+                        <th class="col-sm-1 text-center" data-th-text="#{label.field.label}">Label</th>
+                        <th class="col-sm-1 text-center" data-th-text="#{label.field.description}">Description</th>
+                        <th class="col-sm-1 text-center" data-th-text="#{label.field.isUsed}">isUsed</th>
+                        <th class="col-sm-2 text-center" data-th-text="#{label.action}">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-th-each="data : ${list}">
+                        <td data-th-text="${data.getName()}">Name</td>
+                        <td data-th-text="${data.getLabel()}">Label</td>
+                        <td data-th-text="${data.getDescription()}">Description</td>
+                        <td class="text-center"> 
+                            <i th:if="${data.isUsed()}" class="fa fa-check-square-o"></i>
+                            <i th:unless="${ data.isUsed()}" class="fa fa-square-o"></i>
+                        </td>
+                        <td style="text-align: center;" >
+                            <a href="#" data-th-href="@{${T(fr.ird.jpe.web.controller.AASController).AAS_EDIT_ROLE_URI+'?id='+data.getId()+''}}">
+                                <button type="button" class="btn btn-primary btn-xs">
+                                    <i class="fa fa-edit"></i>
+                                    <span th:remove="tag" th:text="#{label.action.edit}">&nbsp;&nbsp;Edit</span>
+                                </button>
+                            </a>&nbsp; 
+                            <a href="#"  th:href="${data.isUsed()} ? '#' : @{${T(fr.ird.jpe.web.controller.AASController).AAS_DELETE_ROLE_URI+'?id='+data.getId()+''}}" >
+                                <button type="button" class="btn btn-danger btn-xs" th:classappend="${data.isUsed()}? 'disabled'" >
+                                    <i class="fa fa-remove"></i>
+                                    <span th:remove="tag" th:text="#{label.action.delete}">&nbsp;&nbsp;delete</span>
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:fragment="authorizations(list)" th:remove="tag">
+            <table id="authorizationTable" class="table responsive-table">
+                <thead>
+                    <tr>
+                        <th class="col-sm-2 text-center" data-th-text="#{label.field.name}">Nom</th>
+                        <th class="col-sm-1 text-center" data-th-text="#{label.field.label}">Description</th>
+                        <th class="col-sm-1 text-center" data-th-text="#{label.field.description}">Mail</th>
+                        <th class="col-sm-1 text-center" data-th-text="#{label.field.isUsed}">isUsed</th>
+                        <th class="col-sm-2 text-center" data-th-text="#{label.action}">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-th-each="data : ${list}">
+                        <td data-th-text="${data.getName()}">Name</td>
+                        <td data-th-text="${data.getLabel()}">Label</td>
+                        <td data-th-text="${data.getDescription()}">Description</td>
+                        <td class="text-center"> 
+                            <i th:if="${data.isUsed()}" class="fa fa-check-square-o"></i>
+                            <i th:unless="${data.isUsed()}" class="fa fa-square-o"></i>
+                        </td>
+                        <td style="text-align: center;" >
+                            <a href="#" data-th-href="@{${T(fr.ird.jpe.web.controller.AASController).AAS_EDIT_AUTH_URI+'?id='+data.getId()+''}}">
+                                <button type="button" class="btn btn-primary btn-xs">
+                                    <i class="fa fa-edit"></i>
+                                    <span th:remove="tag" th:text="#{label.action.edit}">&nbsp;&nbsp;Edit</span>
+                                </button>
+                            </a>&nbsp; 
+                            <a href="#"  th:href="${data.isUsed()} ? '#' : @{${T(fr.ird.jpe.web.controller.AASController).AAS_DELETE_AUTH_URI+'?id='+data.getId()+''}}" >
+                                <button type="button" class="btn btn-danger btn-xs" th:classappend="${data.isUsed()}? 'disabled'" >
+                                    <i class="fa fa-remove"></i>
+                                    <span th:remove="tag" th:text="#{label.action.delete}">&nbsp;&nbsp;delete</span>
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <div th:fragment="editUser(user, roles)" th:remove="tag">
+            <form class="form-horizontal"  action="#" th:action="@{${T(fr.ird.jpe.web.controller.AASController).AAS_EDIT_USER_URI}}" 
+                  th:object="${user}" method="post" accept-charset="utf-8">
+                <input type="hidden" th:value="${user.topiaid}"  th:field="${user.topiaid}" name="id" />
+                <div class="row"> 
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="userlogin" class="control-label col-lg-4"  th:text="#{label.field.login}" >Login Field</label>
+                            <div class="col-lg-6">
+                                <input value="read only" readonly="" id="userlogin" th:placeholder="#{label.field.login}" th:field="${user.login}" th:value="${user.getLogin()}" class="form-control" type="text"/>
+                            </div>
+                        </div>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('firstname')}? 'has-error'">
+                            <label for="userfirstname" class="control-label col-lg-4" th:text="#{label.field.firstname}">user Name</label>
+                            <div class="col-lg-6">
+                                <input id="userfirstname" th:placeholder="#{label.field.firstname}" th:value="${user.getFirstname()}" th:field="${user.firstname}" class="form-control" type="text"/>
+                                <span th:if="${#fields.hasErrors('firstname')}"
+                                      th:id="error-firstname" class="help-block" th:errors="*{firstname}"></span>
+                            </div>
+                        </div>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('lastname')}? 'has-error'">
+                            <label for="userlastname" class="control-label col-lg-4" th:text="#{label.field.lastname}">user lastname</label>
+                            <div class="col-lg-6">
+                                <input id="userlastname" th:placeholder="#{label.field.lastname}" th:value="${user.getLastname()}" class="form-control" th:field="${user.lastname}" type="text"/>
+                                <span th:if="${#fields.hasErrors('lastname')}"
+                                      th:id="error-lastname" class="help-block" th:errors="*{lastname}"></span>
+                            </div>
+                        </div><!-- /.form-group -->
+                        <div class="form-group" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
+                            <label for="useremail" class="control-label col-lg-4"  th:text="#{label.field.email}" >Email Field</label>
+                            <div class="col-lg-6">
+                                <input id="useremail" th:placeholder="#{label.field.email}" th:value="${user.getEmail()}" class="form-control" type="email" th:field="${user.email}"/>
+                                <span th:if="${#fields.hasErrors('email')}"
+                                      th:id="error-email" class="help-block" th:errors="*{email}"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="userpassword" class="control-label col-lg-4"  th:text="#{label.field.pwd}" >Password Field</label>
+                            <div class="col-lg-6">
+                                <input  id="userpassword" th:value="${user.getPassword()}" class="form-control" th:field="${user.password}" type="text" readonly=""/>
+                                <button  th:disabled="${!user.isLocal()}" id="GeneratePassword" type="button" class="btn btn-default">
+                                    <i class="fa fa-play-circle"></i>
+                                    <span th:remove="tag" th:text="#{label.action.generate.password}">&nbsp;&nbsp;Generate PWD</span>
+                                </button>
+                                <span th:if="${#fields.hasErrors('password')}"
+                                      th:id="error-password" class="help-block" th:errors="*{password}"></span>
+                            </div>
+                        </div><!-- /.form-group -->                        
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="control-label col-lg-1" th:text="#{label.field.roles}">Multiple Select &amp; Deselect</label>
+
+                            <div class="col-lg-11">
+                                <select th-data-placeholder="#{label.field.select.roles}" th:field="${user.roles}" id="select_roles" class="form-control selectpicker" multiple="multiple" tabindex="1">
+                                    <option th:each="role : ${allRoles}" 
+                                            th:value="${{role}}" 
+                                            th:text="${role.getName()}" >role name</option>                                        
+                                </select>   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-offset-5 col-lg-4 input-group">
+
+                        <button id="SaveUser" type="submit" class="btn btn-primary">
+                            <i class="fa fa-play-circle"></i>
+                            <span th:remove="tag" th:text="#{label.action.save}">&nbsp;&nbsp;Save user</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--if name is not null then value="read only" readonly=""--> 
+        <div th:fragment="editRole(role, authorizations)" th:remove="tag">
+            <form class="form-horizontal"  action="#" th:action="@{${T(fr.ird.jpe.web.controller.AASController).AAS_EDIT_ROLE_URI}}" 
+                  th:object="${role}" method="post" accept-charset="utf-8">
+                <input type="hidden" th:value="${role.topiaid}"  th:field="${role.topiaid}" name="id" />
+                <div class="row">    
+                    <div class="col-lg-12">
+                        <div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
+                            <label for="rolename" class="control-label col-lg-4" th:text="#{label.field.name}">Role Name</label>
+                            <div class="col-lg-6">
+                                <input  th:readonly="${!#fields.hasErrors('name') and role.getName()!= null}" id="rolename"  th:placeholder="#{label.field.name}" th:value="${role.getName()}" th:field="${role.name}" class="form-control" type="text"/>
+                                <span th:if="${#fields.hasErrors('name')}"
+                                      th:id="error-name" class="help-block" th:errors="*{name}"></span>
+                            </div>
+                        </div><!-- /.form-group -->
+                        <div class="form-group">
+                            <label for="rolelabel" class="control-label col-lg-4" th:text="#{label.field.label}">Role Label</label>
+                            <div class="col-lg-6">
+                                <input id="rolelabel" th:placeholder="#{label.field.label}" th:value="${role.getLabel()}" th:field="${role.label}" class="form-control" type="text"/>
+                            </div>
+                        </div><!-- /.form-group -->
+
+                        <div class="form-group">
+                            <label for="roledescription" class="control-label col-lg-4" th:text="#{label.field.description}">Default Textarea</label>
+                            <div class="col-lg-6">
+                                <textarea id="roledescription" class="form-control"  th:value="${role.getDescription()}" th:field="${role.description}"></textarea>
+                            </div>
+                        </div><!-- /.form-group -->
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label  col-lg-4" th:text="#{label.field.authorizations}">Multiple with search</label>
+                        <div class="col-lg-12">
+                            <select th-data-placeholder="#{label.field.select.authorizations}" th:field="${role.authorizations}" id="select_authorizations" 
+                                    class="form-control selectpicker" multiple="multiple" tabindex="10">
+                                <option th:each="authorization : ${allAuthorizations}" 
+                                        th:value="${{authorization}}" 
+                                        th:text="${authorization.getName()}" >authorization name</option>                                        
+                            </select>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-offset-5 col-lg-4 input-group">
+                        <button id="SaveRole" type="submit" class="btn btn-primary">
+                            <i class="fa fa-play-circle"></i>
+                            <span th:remove="tag" th:text="#{label.action.save}">&nbsp;&nbsp;Save Role</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div th:fragment="selectOption(list)" th:remove="tag">
+            <script th:inline="javascript">
+                $(document).ready(function () {
+                    /*<![CDATA[*/
+                    var elements = /*[[${list}]]*/[];
+                    $("select option").each(function () {
+                        var optionValue = $(this).val();
+                        for (i = 0; i < elements.length; i++) {
+                            if (optionValue === elements[i].topiaid) {
+                                $(this).attr("selected", "selected");
+                            }
+                        }
+                    });
+                    /*]]>*/
+                });
+            </script>
+        </div>
+        <!--if name is not null then value="read only" readonly=""--> 
+
+        <div th:fragment="editAuthorization(authorization)" th:remove="tag">
+            <form class="form-horizontal"  action="#" th:action="@{${T(fr.ird.jpe.web.controller.AASController).AAS_EDIT_AUTH_URI}}" th:object="${authorization}" method="post" accept-charset="utf-8">
+                <input type="hidden" th:value="${authorization.id}"  th:field="${authorization.id}" name="id" />
+                <div class="row">    
+                    <div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
+                        <label for="authorizationname" class="control-label col-lg-4" th:text="#{label.field.name}">Authorization Name</label>
+                        <div class="col-lg-6">
+                            <input  th:readonly="${!#fields.hasErrors('name') and authorization.getName()!= null}" id="authorizationname" th:placeholder="#{label.field.name}" name="name" th:value="${authorization.getName()}" th:field="${authorization.name}" class="form-control" type="text"/>
+                            <span th:if="${#fields.hasErrors('name')}"
+                                  th:id="error-name" class="help-block" th:errors="*{name}"></span>
+                        </div>
+                    </div><!-- /.form-group -->
+                    <div class="form-group">
+                        <label for="authorizationlabel" class="control-label col-lg-4" th:text="#{label.field.label}">Authorization Label</label>
+                        <div class="col-lg-6">
+                            <input id="authorizationlabel" th:placeholder="#{label.field.label}" name="label" th:value="${authorization.getLabel()}" th:field="${authorization.label}" class="form-control" type="text"/>
+                        </div>
+                    </div><!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label for="authorizationdescription" class="control-label col-lg-4" th:text="#{label.field.description}">Default Textarea</label>
+                        <div class="col-lg-6">
+                            <textarea id="authorizationdescription" class="form-control" name="description"  th:value="${authorization.getDescription()}" th:field="${authorization.description}"></textarea>
+                        </div>
+                    </div><!-- /.form-group -->
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-offset-5 col-lg-4 input-group">
+                        <button id="SaveAuthorization" type="submit" class="btn btn-primary">
+                            <i class="fa fa-play-circle"></i>
+                            <span th:remove="tag" th:text="#{label.action.save}">&nbsp;&nbsp;Save Authorization</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
