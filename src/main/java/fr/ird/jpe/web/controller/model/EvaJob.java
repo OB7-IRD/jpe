@@ -16,6 +16,7 @@
  */
 package fr.ird.jpe.web.controller.model;
 
+//import fr.ird.common.message.Flux;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -33,6 +34,7 @@ public class EvaJob {
 
     private MultipartFile msAccessFile;
     private String tripNumber;
+//    private Flux flux;
 
     public MultipartFile getMsAccessFile() {
         return msAccessFile;
@@ -49,6 +51,14 @@ public class EvaJob {
     public void setTripNumber(String tripNumber) {
         this.tripNumber = tripNumber;
     }
+
+//    public void setFlux(Flux flux) {
+//        this.flux = flux;
+//    }
+//
+//    public Flux getFlux() {
+//        return flux;
+//    }
 
     @Override
     public String toString() {

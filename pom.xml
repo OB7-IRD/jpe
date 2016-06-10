@@ -179,7 +179,7 @@
 
         <dependency>
             <groupId>fr.ird</groupId>
-            <artifactId>driver-eva</artifactId>
+            <artifactId>eva-driver-avdth</artifactId>
             <version>1.2</version>
             <type>jar</type>
         </dependency>
