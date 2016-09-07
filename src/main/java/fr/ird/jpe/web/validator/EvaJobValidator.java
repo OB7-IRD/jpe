@@ -26,10 +26,6 @@ import org.springframework.validation.Validator;
  * @since 1.0
  * @date 20 oct. 2014
  *
- * $LastChangedDate$
- *
- * $LastChangedRevision$
- *
  */
 public class EvaJobValidator implements Validator {
 
@@ -52,10 +48,6 @@ public class EvaJobValidator implements Validator {
                 }
             }
         }
-
-//      if (ej.getFile().getSize() == 0) {
-//          errors.rejectValue("file", "uploadForm.salectFile", "Please select a file!");
-//      }
     }
 
     @Override

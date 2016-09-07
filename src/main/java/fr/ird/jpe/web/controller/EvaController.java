@@ -18,6 +18,7 @@ package fr.ird.jpe.web.controller;
 
 import fr.ird.common.log.LogService;
 import fr.ird.common.message.Flux;
+import fr.ird.common.message.Message;
 import fr.ird.jpe.web.utils.WebUtils;
 import fr.ird.jpe.web.controller.model.EvaJob;
 import fr.ird.jpe.web.validator.EvaJobValidator;
@@ -25,6 +26,7 @@ import fr.ird.driver.eva.common.exception.EvaDriverException;
 import fr.ird.eva.common.exception.EvaException;
 import fr.ird.eva.core.service.TransferService;
 import java.io.File;
+import java.util.Locale;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,61 +48,41 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  */
 @Controller
 public class EvaController {
-
+    
     public final static String EVA_URI = "/eva";
     public final static String EVA_RUN_URI = EVA_URI + "/run";
-
-//  @Autowired
-//  @Qualifier("evaJobValidator")
-//  private Validator validator;
-//
-//  @ModelAttribute("evajob")
-//  public EvaJob createEvaJobModel() {
-//      // ModelAttribute value should be same as used in the empSave.jsp
-//      return new EvaJob();
-//  }
-//
-//    @Autowired
-//    TransferService transferService;
+    
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.setValidator(new EvaJobValidator());
     }
-
+    
     @RequestMapping(
             value = EVA_RUN_URI,
             method = RequestMethod.POST
     )
     public String runEvA(@Valid
             @ModelAttribute("evajob") EvaJob evajob, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
-
-//      System.out.println("RUN EVA --> EVA JOB :" + evajob);
+        
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.evajob", result);
             redirectAttributes.addFlashAttribute("evajob", evajob);
-
-//          System.out.println("Result: nb error=" + result.getErrorCount());
-//          System.out.println("Result: TN=" + evajob.getTripNumber());
-//          System.out.println("Result: Model=");
-//          for (String k : model.asMap().keySet()) {
-//              System.out.println("-> " + k);
-//          }
+            
             return "redirect:" + LogbookController.TRIP_TRANSFER_URI;
         }
-
+        
         MultipartFile msAccessFile = evajob.getMsAccessFile();
         String dbPath = null;
         TransferService transferService = TransferService.getService();
-
+        
         try {
-//            transferService.init();
-
+            
             if ((msAccessFile != null) && !msAccessFile.isEmpty()) {
                 String name = msAccessFile.getOriginalFilename();
-
+                
                 System.out.println(msAccessFile.getOriginalFilename() + " : Received file of size "
                         + msAccessFile.getSize() + " bytes");
-
+                
                 if (WebUtils.uploadFile(name, msAccessFile)) {
                     dbPath = transferService.initDB(WebUtils.TEMP_FILE_DIR + File.separator + name);
                 } else {
@@ -110,15 +92,20 @@ public class EvaController {
                 dbPath = transferService.initDB();
             }
 
-            Flux flux = transferService.executeTransfer(evajob.getTripNumber());
+//            for (String tripNumber : ) {
+            Flux flux = transferService.executeTransfer(evajob.getTripNumbers());
+            for (Message m : flux.getMessages()) {
+                LogService.getService(EvaController.class).logApplicationInfo(m.displayMessage(Locale.FRENCH));
+            }
+//            }
 
-//          model.addAttribute("flux", flux);
+//            model.addAttribute("flux", flux);
         } catch (EvaException | EvaDriverException ex) {
             LogService.getService(EvaController.class).logApplicationError(ex.getMessage());
         }
-
+        
         model.addAttribute("filePath", dbPath);
-
+        
         return "eva/result";
     }
 }

@@ -58,20 +58,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                     <i class="fa fa-camera"></i>
                                     <span th:remove="tag" th:text="#{label.action.show}">&nbsp;&nbsp;Show</span>
                                 </button></a>&nbsp; 
-                            <a href="#" data-th-href="@{/trip/transfer(tripNumber=${trip.tripNumber})}">
+                            <a href="#" data-th-href="@{/trip/transfer(tripNumber[]=${trip.tripNumber})}">
                                 <button type="button" class="btn btn-primary btn-xs">
                                     <i class="fa fa-play-circle"></i>
                                     <span th:remove="tag" th:text="#{label.action.transfer}">&nbsp;&nbsp;Transfer</span>
-                                </button></a>
+                                </button>
+                            </a>
                         </td>
                     </tr>
                 </tbody>
             </table>
 
         </div>
-
         <div th:fragment="property(trip, cssClass)" th:remove="tag">
-
             <div th:class="${cssClass}">
                 <div class="body">
                     <dl class="dl-horizontal">
@@ -90,7 +89,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             <i th:if="${trip.partialLanding}" class="fa fa-check-square-o"></i>
                             <i th:unless="${trip.partialLanding}" class="fa fa-square-o"></i>
                         </dd>
-
                     </dl>
                 </div>
             </div>
@@ -114,8 +112,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </dl>
                 </div>
             </div>
-
         </div>
-
     </body>
 </html>

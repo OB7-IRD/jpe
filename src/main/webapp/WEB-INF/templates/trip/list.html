@@ -38,21 +38,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <div class="row">
                 <div class="col-lg-12">
                     <div class="box">
-                        <!--                        <header>
-                                                    <div class="icons">
-                                                        <i class="fa fa-table"></i>
-                                                    </div>
-                                                    <h5 th:text="#{label.list.trip}">Listing trip</h5>
-                                                </header>-->
                         <div  class="body">
                             <div th:replace="helpers/trip :: tabular(trips=${trips})"  th:remove="tag"/>
+                            <div class="col-lg-offset-5 col-lg-1">
 
-                            <!--                            <div class="col-lg-offset-5 col-lg-1">
-                                                            <button id="transfer-selected-trip" type="button" class="btn btn-primary btn-sm">
-                                                                <i class="fa fa-play-circle"></i>
-                                                                <span th:remove="tag" th:text="#{label.action.transfer.multi}">&nbsp;&nbsp;Transfer</span>
-                                                            </button>
-                                                        </div>-->
+                                <a id="transfer-selected-trip" href="#" >
+                                    <button type="button" class="btn btn-primary btn-xs">
+                                        <i class="fa fa-play-circle"></i>
+                                        <span th:remove="tag" th:text="#{label.action.transfer.multi}">&nbsp;&nbsp;Transfer</span>
+                                    </button>
+                                </a>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -65,21 +62,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <div th:include="helpers/js :: datatable" th:remove="tag"></div>
             <script th:inline="javascript">
 
-                var table = initDataTable('#dataTable');
-//                        .DataTable({
-//                    "language": {
-//                        "url": "/assets/lib/datatables/resources/" + lang + ".json"
-//                    }
-//                });
 
-//                $('#dataTable tbody').on('click', 'tr', function () {
-//                    $(this).toggleClass('selected');
-//                    $(this).toggleClass('active');
-//                });
-//
-//                $('#transfer-selected-trip').click(function () {
-//                    alert(table.rows('.selected').data().length + ' row(s) selected');
-//                });
+
+                /*<![CDATA[*/
+                var table = initDataTable('#dataTable');
+
+                $('#dataTable tbody').on('click', 'tr', function () {
+                    $(this).toggleClass('selected');
+                    $(this).toggleClass('active');
+                });
+
+                $('#transfer-selected-trip').click(function () {
+                    var dataSelected = table.rows('.selected').data();
+                    var i = 0;
+                    var url = "http://localhost:9000/trip/transfer";
+                    var tn = [];
+                    for (; dataSelected[i]; ) {
+                        tn[i] = dataSelected[i][0];
+                        i++;
+                    }
+                    url += "?" + decodeURIComponent($.param({tripNumber: tn}));
+                    document.getElementById('transfer-selected-trip').href=url;
+                    
+
+
+                });
+                ;/*]]>*/
             </script>
         </div>
     </body>

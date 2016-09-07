@@ -16,7 +16,8 @@
  */
 package fr.ird.jpe.web.controller.model;
 
-//import fr.ird.common.message.Flux;
+import fr.ird.common.message.Flux;
+import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -25,15 +26,11 @@ import org.springframework.web.multipart.MultipartFile;
  * @since 1.0
  * @date 17 oct. 2014
  *
- * $LastChangedDate$
- *
- * $LastChangedRevision$
- *
  */
 public class EvaJob {
 
     private MultipartFile msAccessFile;
-    private String tripNumber;
+    private List<String> tripNumbers;
 //    private Flux flux;
 
     public MultipartFile getMsAccessFile() {
@@ -44,12 +41,12 @@ public class EvaJob {
         this.msAccessFile = msAccessFile;
     }
 
-    public String getTripNumber() {
-        return tripNumber;
+    public List<String> getTripNumbers() {
+        return tripNumbers;
     }
 
-    public void setTripNumber(String tripNumber) {
-        this.tripNumber = tripNumber;
+    public void setTripNumbers(List<String> tripNumbers) {
+        this.tripNumbers = tripNumbers;
     }
 
 //    public void setFlux(Flux flux) {
@@ -62,6 +59,6 @@ public class EvaJob {
 
     @Override
     public String toString() {
-        return "EvaJob{" + "msAccessFile=" + msAccessFile + ", tripNumber=" + tripNumber + '}';
+        return "EvaJob{" + "msAccessFile=" + msAccessFile + ", tripNumbers=" + tripNumbers.toString() + '}';
     }
 }

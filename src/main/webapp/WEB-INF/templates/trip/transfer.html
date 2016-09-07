@@ -82,30 +82,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                         </div>
                                     </div>
                                 </div>
+                                <div>
+                                    <input type="hidden" th:value="${tripNumbers}"  th:field="${evajob.tripNumbers}" name="tripNumbers" />
+
+                                    <button id="RunEVA" type="submit" class="btn btn-primary">
+                                        <i class="fa fa-play-circle"></i>
+                                        <span th:remove="tag" th:text="#{label.action.transfer}">&nbsp;&nbsp;Transfer</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-8">
                         <!-- .box -->
-                        <div class="box">
-                            <header>
-                                <div class="icons">
-                                    <i class="fa fa-list"></i>
-                                </div>
-                                <h5 th:text="#{label.trip.properties}">Lorem ipsum dolor sit amet.</h5>
-
-                            </header>
-                            <div th:replace="helpers/trip :: property(trip=${trip}, cssClass='col-lg-6')"  th:remove="tag"/>
+                        <div data-th-each="trip : ${trips}">
+                            <div class="box">
+                                <header>
+                                    <h5><i class="fa fa-list"></i> <span th:text="#{label.trip.properties}">Lorem ipsum dolor sit amet.</span></h5>
+                                </header>
+                                <div th:replace="helpers/trip :: property(trip=${trip}, cssClass='col-lg-6')"  th:remove="tag"/>
+                            </div>
                         </div>
                     </div><!-- /.box -->
-                    <div>
-                        <input type="hidden" th:value="${tripNumber}"  th:field="${evajob.tripNumber}" name="tripNumber" />
 
-                        <button id="RunEVA" type="submit" class="btn btn-primary">
-                            <i class="fa fa-play-circle"></i>
-                            <span th:remove="tag" th:text="#{label.action.transfer}">&nbsp;&nbsp;Transfer</span>
-                        </button>
-                    </div>
                 </div>
             </form>
         </div>

@@ -23,6 +23,7 @@ import fr.ird.jpe.web.controller.model.ShowTripJob;
 import fr.ird.driver.eva.business.Trip;
 import fr.ird.eva.core.service.EvaService;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
@@ -105,23 +106,28 @@ public class LogbookController {
             method = RequestMethod.GET
     )
     public String transfer(@RequestParam(
-            value = "tripNumber",
+            value = "tripNumber[]",
             required = false
-    ) String tripNumber, Model model, HttpServletRequest request) {
+    ) List<String> tripNumber, Model model, HttpServletRequest request) {
         model.addAttribute("actions", getActivities());
+        List<String> tripNumbers = tripNumber;
 //      System.out.println("Transfer>GET");
         EvaJob evaJob;
 
         if (!model.containsAttribute("evajob")) {
             evaJob = new EvaJob();
-            evaJob.setTripNumber(tripNumber);
+            evaJob.setTripNumbers(tripNumbers);
         } else {
             evaJob = (EvaJob) model.asMap().get("evajob");
-            tripNumber = evaJob.getTripNumber();
+            tripNumbers = evaJob.getTripNumbers();
+        }
+        List trips = new ArrayList<>();
+        for (String tn : tripNumbers) {
+            trips.add(EvaService.getService().findTrip(tn));
         }
 
         model.addAttribute("evajob", evaJob);
-        model.addAttribute("trip", EvaService.getService().findTrip(tripNumber));
+        model.addAttribute("trips", trips);
 
 //      System.out.println("EVA JOB : " + evaJob);
         return "trip/transfer";
