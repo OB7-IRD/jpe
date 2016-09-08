@@ -23,7 +23,6 @@ import fr.ird.jpe.web.controller.model.ShowTripJob;
 import fr.ird.driver.eva.business.Trip;
 import fr.ird.eva.core.service.EvaService;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
@@ -49,33 +48,33 @@ public class LogbookController {
     public List<Activity> getActivities() {
         ArrayList<Activity> actions = new ArrayList();
 
-        actions.add(new Activity("label.trip.statistic", Activity.STATISTIC, TRIP_URI));
+//        actions.add(new Activity("label.trip.statistic", Activity.STATISTIC, TRIP_URI));
         actions.add(new Activity("label.trip.all", Activity.LISTING, TRIP_LIST_URI));
-        actions.add(new Activity("label.trip.active", Activity.LISTING, TRIP_ACTIVE_URI));
+//        actions.add(new Activity("label.trip.active", Activity.LISTING, TRIP_ACTIVE_URI));
 
         return actions;
     }
 
     public final static String TRIP_URI = "/trip";
     public final static String TRIP_LIST_URI = TRIP_URI + "/list";
-    public final static String TRIP_ACTIVE_URI = TRIP_URI + "/active";
+//    public final static String TRIP_ACTIVE_URI = TRIP_URI + "/active";
     public final static String TRIP_TRANSFER_URI = TRIP_URI + "/transfer";
     public final static String TRIP_SHOW_URI = TRIP_URI + "/show";
     private List<Trip> allTrips;
     @Autowired
     private MessageSource source;
 
-    @RequestMapping(
-            value = {"/", TRIP_URI},
-            method = RequestMethod.GET
-    )
-    public String index(Model model) {
-        model.addAttribute("actions", getActivities());
-        return "trip/index";
-    }
+//    @RequestMapping(
+//            value = {"/", TRIP_URI},
+//            method = RequestMethod.GET
+//    )
+//    public String index(Model model) {
+//        model.addAttribute("actions", getActivities());
+//        return "trip/index";
+//    }
 
     @RequestMapping(
-            value = TRIP_LIST_URI,
+            value = {"/", TRIP_URI, TRIP_LIST_URI},
             method = RequestMethod.GET
     )
     public ModelAndView list() {
@@ -88,19 +87,18 @@ public class LogbookController {
         return model;
     }
 
-    @RequestMapping(
-            value = TRIP_ACTIVE_URI,
-            method = RequestMethod.GET
-    )
-    public ModelAndView active() {
-        ModelAndView model = new ModelAndView("trip/active");
-        model.addObject("actions", getActivities());
-        allTrips = EvaService.getService().findAllActiveTrips();
-        model.addObject("trips", allTrips);
-
-        return model;
-    }
-
+//    @RequestMapping(
+//            value = TRIP_ACTIVE_URI,
+//            method = RequestMethod.GET
+//    )
+//    public ModelAndView active() {
+//        ModelAndView model = new ModelAndView("trip/active");
+//        model.addObject("actions", getActivities());
+//        allTrips = EvaService.getService().findAllActiveTrips();
+//        model.addObject("trips", allTrips);
+//
+//        return model;
+//    }
     @RequestMapping(
             value = TRIP_TRANSFER_URI,
             method = RequestMethod.GET

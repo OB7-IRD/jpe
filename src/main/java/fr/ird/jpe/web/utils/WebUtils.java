@@ -27,14 +27,11 @@ import org.springframework.web.multipart.MultipartFile;
  * @since 0.0
  * @date 20 oct. 2014
  *
- * $LastChangedDate$
- *
- * $LastChangedRevision$
  *
  */
 public class WebUtils {
 
-    public static final String TEMP_FILE_DIR = System.getProperty("catalina.home") + File.separator + "dashboard_temp";
+    public static final String TEMP_FILE_DIR = System.getProperty("catalina.home") + File.separator + "jpe_temp";
 
     public static boolean uploadFile(String name, MultipartFile file) {
         if (file == null) {

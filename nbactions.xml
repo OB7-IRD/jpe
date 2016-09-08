@@ -22,4 +22,12 @@
             <goal>jetty:run</goal>
         </goals>
     </action>
+    <action>
+            <actionName>CUSTOM-Run TOmcat</actionName>
+            <displayName>Run TOmcat</displayName>
+            <goals>
+                <goal>package</goal>
+                <goal>tomcat:run</goal>
+            </goals>
+        </action>
 </actions>

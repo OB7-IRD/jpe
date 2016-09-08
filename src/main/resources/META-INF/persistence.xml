@@ -39,9 +39,9 @@
             <!-- Configure database to be created on startup if not already existing. -->
             <!-- property name="eclipselink.ddl-generation" value="create-tables" / -->
             <!-- To drop and replace existing schema this can be used. -->
-            <property name="eclipselink.create-ddl-jdbc-file-name" value="createDDL_ddlGeneration.jdbc"/>
-            <property name="eclipselink.drop-ddl-jdbc-file-name" value="dropDDL_ddlGeneration.jdbc"/>
-            <property name="eclipselink.ddl-generation.output-mode" value="both"/>
+            <!--<property name="eclipselink.create-ddl-jdbc-file-name" value="createDDL_ddlGeneration.jdbc"/>-->
+            <!--<property name="eclipselink.drop-ddl-jdbc-file-name" value="dropDDL_ddlGeneration.jdbc"/>-->
+            <!--<property name="eclipselink.ddl-generation.output-mode" value="both"/>-->
             <!--<property name="eclipselink.ddl-generation" value="none"/>-->
             <!--Creer la base de donnée-->
             <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>

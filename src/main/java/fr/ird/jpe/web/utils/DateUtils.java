@@ -28,10 +28,6 @@ import org.springframework.context.annotation.Configuration;
  * @since 1.0
  * @date 6 oct. 2014
  *
- * $LastChangedDate$
- *
- * $LastChangedRevision$
- *
  */
 @Configuration
 public class DateUtils {

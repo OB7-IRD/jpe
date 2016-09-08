@@ -16,10 +16,6 @@
  */
 package fr.ird.jpe.web.navigation;
 
-import static fr.ird.jpe.web.common.IconConstant.AKADO_ERS_ICONS;
-import static fr.ird.jpe.web.common.IconConstant.AKADO_ICONS;
-import static fr.ird.jpe.web.common.IconConstant.AKADO_OBSERVE_ICONS;
-import fr.ird.jpe.web.controller.AASController;
 import static fr.ird.jpe.web.controller.AASController.*;
 import static fr.ird.jpe.web.controller.LogbookController.*;
 
@@ -93,7 +89,7 @@ public class Menu {
 //        menu.addMenuItem(new MenuItem(DASHBOARD_URI, "service.menu.label.dashboard", "fa-dashboard"));
         MenuItem tripItem = new MenuItem(TRIP_URI, "service.menu.label.trip", "fa-ship");
 
-        tripItem.addChildren(new MenuItem(TRIP_ACTIVE_URI, "service.menu.label.trip.active"));
+//        tripItem.addChildren(new MenuItem(TRIP_ACTIVE_URI, "service.menu.label.trip.active"));
         tripItem.addChildren(new MenuItem(TRIP_LIST_URI, "service.menu.label.trip.list"));
         menu.addMenuItem(tripItem);
         return menu;
