@@ -75,7 +75,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 $('#transfer-selected-trip').click(function () {
                     var dataSelected = table.rows('.selected').data();
                     var i = 0;
-                    var url = "/trip/transfer";
+                    var url = window.location.pathname+ "/transfer";
                     var tn = [];
                     for (; dataSelected[i]; ) {
                         tn[i] = dataSelected[i][0];
@@ -83,8 +83,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     }
                     url += "?" + decodeURIComponent($.param({tripNumber: tn}));
                     document.getElementById('transfer-selected-trip').href=url;
-                    
-
 
                 });
                 ;/*]]>*/
