@@ -17,9 +17,7 @@
 package fr.ird.jpe.web.controller;
 
 import fr.ird.common.log.LogService;
-import fr.ird.common.message.Flux;
 import fr.ird.common.message.Message;
-import fr.ird.driver.eva.common.EvaMessage;
 import fr.ird.jpe.web.utils.WebUtils;
 import fr.ird.jpe.web.controller.model.EvaJob;
 import fr.ird.jpe.web.validator.EvaJobValidator;
@@ -78,9 +76,10 @@ public class EvaController {
         MultipartFile msAccessFile = evajob.getMsAccessFile();
         String dbPath = null;
         TransferService transferService = TransferService.getService();
+
         List<String> messages = new ArrayList<>();
         try {
-
+            transferService.init();
             if ((msAccessFile != null) && !msAccessFile.isEmpty()) {
                 String name = msAccessFile.getOriginalFilename();
 
