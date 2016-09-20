@@ -1,24 +1,8 @@
 <!DOCTYPE html>
-<!--
-Copyright (C) 2015 IRD
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
--->
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  
       xmlns:tiles="http://www.thymeleaf.org" lang="en">
     <head>
-        <title>Footer</title>
+        <title>Sections</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     </head>
     <body>
@@ -46,89 +30,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <div> 
                             <div  th:replace="helpers/menu :: profile(user=${session.user})"  th:remove="tag"/>                            
                         </div>
-
-
                     </div>
-
-
-
                 </div>
                 <!-- /.container-fluid -->
             </nav>
-
-            <!--            <header id="nav-bar">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div id="header-container">
-                                        <a id="backbutton"  onclick="history.back(1);">
-                                            <i class="backbutton fa fa-arrow-circle-o-left fa-3x"></i></a>
-                                        <h5>Home</h5>
-                                                                    <a data-toggle="modal" href="#myModal" class="btn btn-primary">Show Flyout (classic modal)</a>
-                                        <div class="dropdown">
-                                            <a class="header-dropdown dropdown-toggle accent-color" data-toggle="dropdown" href="#" >
-                                                Observatoire Thonier :: Dash Board
-                                                <b class="caret"></b>
-                                            </a>
-                                            <div th:replace="helpers/menu :: menu(menu=${beans.navigationUtils.getVerticalMenu()})"  th:remove="tag"/>
-                                        </div>
-                                    </div>
-                                    <div class="pull-right">
-            
-                                        <div th:replace="helpers/menu :: currentuser(user=${session.user})"  th:remove="tag"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </header>-->
         </div>      
-        <!--                <div th:fragment="navigation"  th:remove="tag">
-            <header id="nav-bar">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div id="header-container">
-                            <a id="backbutton"  onclick="history.back(1);">
-                                <i class="backbutton fa fa-arrow-circle-o-left fa-3x"></i></a>
-                            <h5>Home</h5>
-                                                        <a data-toggle="modal" href="#myModal" class="btn btn-primary">Show Flyout (classic modal)</a>
-                            <div class="dropdown">
-                                <a class="header-dropdown dropdown-toggle accent-color" data-toggle="dropdown" href="#" >
-                                    Observatoire Thonier :: Dash Board
-                                    <b class="caret"></b>
-                                </a>
-                                <div th:replace="helpers/menu :: menu(menu=${beans.navigationUtils.getVerticalMenu()})"  th:remove="tag"/>
-                            </div>
-                        </div>
-                        <div class="pull-right">
-        
-                            <div th:replace="helpers/menu :: currentuser(user=${session.user})"  th:remove="tag"/>
-                        </div>
-                    </div>
-                </div>
-            </header>
-        </div>-->
+
         <div th:fragment="header"  th:remove="tag">
-            <!--            <header id="nav-bar">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div id="header-container">
-                                        <a id="backbutton"  onclick="history.back(1);">
-                                            <i class="backbutton fa fa-arrow-circle-o-left fa-3x"></i></a>
-                                        <h5>Home</h5>
-                                                                    <a data-toggle="modal" href="#myModal" class="btn btn-primary">Show Flyout (classic modal)</a>
-                                        <div class="dropdown">
-                                            <a class="header-dropdown dropdown-toggle accent-color" data-toggle="dropdown" href="#" >
-                                                Observatoire Thonier :: Dash Board
-                                                <b class="caret"></b>
-                                            </a>
-                                            <div th:replace="helpers/menu :: menu(menu=${beans.navigationUtils.getVerticalMenu()})"  th:remove="tag"/>
-                                        </div>
-                                    </div>
-                                    <div class="pull-right">
-            
-                                        <div th:replace="helpers/menu :: currentuser(user=${session.user})"  th:remove="tag"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </header>-->
         </div>
         <div th:fragment="partnerSite"  th:remove="tag">
             <ul class="nav pull-right">         
@@ -228,18 +136,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <div class="col-md-4 col-sm-4">
                             <h2>links</h2>
                             <ul class="list-unstyled footer-links">
-                                <!--                                <li><a href="#" class="flink">About Us</a>
-                                                                </li>
-                                                                <li><a href="#" class="flink">The Team</a>
-                                                                </li>
-                                                                <li><a href="#" class="flink">Blog</a>
-                                                                </li>
-                                                                <li><a href="#" class="flink">Contact</a>
-                                                                </li>
-                                                                <li><a href="#" class="flink">Privacy Policy</a>
-                                                                </li>
-                                                                <li><a href="#" class="flink">Terms of Use</a>
-                                                                </li>-->
                             </ul>
                         </div>
 
@@ -272,14 +168,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             &copy;&nbsp;
                             <span th:text="${beans.dateUtils.getCurrentYear()}" th:remove="tag">2014</span>&nbsp;<span th:text="#{global.copyrights}" th:remove="tag">IRD - Observatoire Thonier. Tous droits résérvés.</span>
                         </div>
-                        <!--                        <div class="col-md-4">
-                                                    <ul class="list-inline quicklinks">
-                                                        <li><a href="#">Privacy Policy</a>
-                                                        </li>
-                                                        <li><a href="#">Terms of Use</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>-->
                     </div>
                 </div>
             </footer>

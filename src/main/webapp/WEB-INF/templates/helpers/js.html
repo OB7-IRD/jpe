@@ -1,20 +1,4 @@
 <!DOCTYPE html>
-<!--
-Copyright (C) 2014 IRD
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
--->
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  
       xmlns:tiles="http://www.thymeleaf.org" lang="en">
     <head>
@@ -50,9 +34,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <script th:src="@{/assets/lib/jasny-bootstrap/js/jasny-bootstrap.min.js}"></script>
         </div>     
         <div th:fragment="highcharts" th:remove="tag">
-            <!--            <script src="http://code.highcharts.com/highcharts.js"></script>
-                        <script src="http://code.highcharts.com/highcharts-more.js"></script>
-                        <script src="http://code.highcharts.com/modules/exporting.js"></script>-->
             <script type="text/javascript" th:src="@{/assets/lib/highcharts/highcharts.js}"></script>
             <script type="text/javascript" th:src="@{/assets/lib/highcharts/highcharts-more.js}"></script>
             <script type="text/javascript" th:src="@{/assets/lib/highcharts/modules/exporting.js}"></script>
@@ -68,8 +49,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             <link rel="stylesheet" th:href="@{/assets/lib/leaflet-awesome-markers/leaflet.awesome-markers.css}" />
             <script type="text/javascript" th:src="@{/assets/lib/leaflet-awesome-markers/leaflet.awesome-markers.js}"></script>
-
-            <!--<script type="text/javascript" th:src="@{/assets/lib/leaflet/leaflet.js}"></script>-->
         </div>  
     </body>
 </html>

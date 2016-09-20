@@ -1,20 +1,4 @@
 <!DOCTYPE html>
-<!--
-Copyright (C) 2014 IRD
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
--->
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:th="http://www.thymeleaf.org"  
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  
@@ -51,19 +35,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <div th:replace="helpers/trip :: property(trip=${trip}, cssClass='col-lg-6')"  th:remove="tag"/>
                     </div>
                 </div>
-<!--                <div class="col-lg-6">
-                    <div class="box">
-                        <header>
-                            <div class="icons">
-                                <i th:class="${'fa '+T(fr.ird.jpe.web.common.IconConstant).AKADO_ICONS}"></i>
-                            </div>
-                            <h5 th:text="#{label.trip.show.akado}">Lorem ipsum dolor sit amet.</h5>
-                        </header>
-                        <div class="body">
-                            Lorem ipsum dolor sit amet.
-                        </div>
-                    </div>                        
-                </div>                                           -->
             </div> 
             <div class="row">
                 <div class="col-lg-6">
@@ -159,17 +130,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 <i class="fa fa-globe"></i>
                             </div>
                             <h5 th:text="#{label.trip.show.maps}">Lorem ipsum dolor sit amet.</h5>
-                            <!--                            <div class="toolbar">
-                                                            <div class="btn-group">
-                                                                <a href="#map" data-toggle="collapse" class="btn btn-sm btn-default minimize-box">
-                                                                    <i class="fa fa-angle-up"></i>
-                                                                </a> 
-                                                            </div>
-                                                        </div>-->
                         </header>
                         <div class="body">
                             <div id="leafmap" class="map"></div>
-                            <!--<p th:text="${map.getGeoms()}"></p>-->
                         </div>
                     </div>               
                 </div>
@@ -209,22 +172,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 });
                 //if maxZoom = 10 ? shiftPosition = 0.015 : shiftPosition = 0.0001
                 var shiftPosition = 0.015;
-
-//                function onEachFeature(feature, layer) {
-//                    var popupContent = '<dl>';
-//                    for (property in feature.properties) {
-//
-//                        /*this will create one string with all the Javascript 
-//                         properties and values to avoid multiple alert boxes: */
-//                        popupContent += '<dt>' + property.toString().toUpperCase() + '</dt><dd>' + feature.properties[property] + '</dd>';
-//                    }
-//                    // does this feature have a property named popupContent?
-////                    if (feature.properties && feature.properties.popupContent) {
-//
-////                    }
-//                    popupContent += '</dl>';
-//                    layer.bindPopup(popupContent);
-//                }
 
                 function getPopupContent(properties) {
                     var popupContent = '<dl>';

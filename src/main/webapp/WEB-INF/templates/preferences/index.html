@@ -1,20 +1,4 @@
 <!DOCTYPE html>
-<!--
-Copyright (C) 2014 IRD
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
--->
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:th="http://www.thymeleaf.org"  
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"        
@@ -78,7 +62,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                             </div>
                                         </div><!-- /.form-group -->      
                                         <div class="form-group">
-                                            <!--<label for="userpassword" class="control-label col-lg-4"  th:text="#{label.field.pwd}" >Password Field</label>-->
                                             <div class="col-lg-6">
                                                 <input  id="userpassword" th:value="${current_user.getPassword()}" class="form-control" th:field="${current_user.password}" type="hidden" readonly="" />
                                                 <span th:if="${#fields.hasErrors('password')}"
@@ -117,21 +100,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                                 <input id="userlocation" th:readonly="${current_user.getType()!=0}"  th:placeholder="#{label.field.location}" th:field="${current_user.location}" th:value="${current_user.getLocation()}" class="form-control" type="text"/>
                                             </div>
                                         </div><!-- /.form-group -->
-                                        <!--                                        <div class="form-group">
-                                                                                    <label class="control-label col-lg-4">Select user picture</label>
-                                                                                    <div class="col-lg-8">
-                                                                                        <select name="userpicture"> 
-                                                                                            <option value="1">/assets/img/users/dolphin.png</option>
-                                                                                            <option value="2">/assets/img/users/jellyfish.png</option>
-                                                                                            <option value="3">/assets/img/usersoctopus.png</option> 
-                                                                                            <option value="4">/assets/img/users/shark.png</option> 
-                                                                                            <option value="5">/assets/img/users/squid.png</option> 
-                                                                                            <option value="6">/assets/img/users/tuna.png</option> 
-                                                                                            <option value="7">/assets/img/users/turtle.png</option> 
-                                                                                            <option value="8">/assets/img/users/whale.png</option> 
-                                                                                        </select>
-                                                                                    </div>
-                                                                                </div>-->
                                     </div>
                                 </div>
                                 <div class="row">
