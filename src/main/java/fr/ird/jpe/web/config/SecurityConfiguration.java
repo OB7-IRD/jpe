@@ -28,7 +28,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
 /**
- *
+ * Configures the security manager, ie IRD-AAS.
  * @author Julien Lebranchu <julien.lebranchu@ird.fr>
  * @since 0.0
  * @date 4 nov. 2014
@@ -42,10 +42,6 @@ public class SecurityConfiguration {
         return new CustomSecurityRealm();
     }
 
-//  @Bean
-//  public TestRealm getRealm() {
-//      return new TestRealm();
-//  }
     @Bean
     public WebSecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();

@@ -31,6 +31,7 @@ import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 
 /**
+ * Initialisation de la servelet de l'application.
  *
  * @author Julien Lebranchu <julien.lebranchu@ird.fr>
  * @since 1.0
@@ -82,10 +83,6 @@ public class WebAppInitializer implements WebApplicationInitializer {
         public void contextDestroyed(ServletContextEvent event) {
             super.contextDestroyed(event);
             LogService.getService(WebAppInitializer.class).logApplicationDebug("ServletContextListener destroyed");
-
-//          if (manager != null) {
-//              manager.close();
-//          }
             Enumeration<Driver> drivers = DriverManager.getDrivers();
 
             while (drivers.hasMoreElements()) {
@@ -94,14 +91,12 @@ public class WebAppInitializer implements WebApplicationInitializer {
                 try {
                     DriverManager.deregisterDriver(driver);
 
-//                  logger.log(Level.INFO, String.format("Deregistering jdbc driver: %s", driver));
                 } catch (SQLException e) {
                     LogService.getService(WebAppInitializer.class).logApplicationError(String.format("Error deregistering driver %s", driver));
                     LogService.getService(WebAppInitializer.class).logApplicationError(e.getMessage());
                 }
             }
 
-//          this.servletContext = null;
         }
 
         @Override
@@ -109,13 +104,6 @@ public class WebAppInitializer implements WebApplicationInitializer {
             super.contextInitialized(event);
             LogService.getService(WebAppInitializer.class).logApplicationDebug("ServletContextListener started");
 
-//          manager = AASManager.getInstance();
-//          manager.init("eva-aas");
-//          try {
-//              Privileges.insertDefaultPrivileges(manager);
-//          } catch (UserAlreadyExistsException ex) {
-//              LogService.getService(WebAppInitializer.class).logApplicationError(ex.getMessage());
-//          }
         }
     }
 }
