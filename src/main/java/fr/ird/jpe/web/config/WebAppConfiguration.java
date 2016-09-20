@@ -23,6 +23,7 @@ import com.fasterxml.jackson.datatype.joda.JodaModule;
 import fr.ird.aas.exception.UserAlreadyExistsException;
 import fr.ird.aas.realm.AASManager;
 import fr.ird.common.log.LogService;
+import fr.ird.eva.core.service.EvaService;
 import fr.ird.jpe.web.formatter.AuthorizationFormatter;
 import fr.ird.jpe.web.formatter.RoleFormatter;
 import fr.ird.jpe.web.aas.Privileges;
@@ -86,9 +87,7 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter {
     @Description("Thymeleaf view resolver")
     public ThymeleafViewResolver viewResolver() {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-
         viewResolver.setTemplateEngine(templateEngine());
-
         return viewResolver;
     }
 
@@ -187,13 +186,6 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter {
         return localValidatorFactoryBean();
     }
 
-//  @Bean
-//    public MultipartConfigElement multipartConfigElement() {
-//         MultipartConfigFactory factory = new MultipartConfigFactory();
-//   factory.setMaxFileSize("128KB");
-//   factory.setMaxRequestSize("128KB");
-//   return factory.createMultipartConfig();
-//    }
     @Override
     public void addFormatters(FormatterRegistry formatterRegistry) {
         formatterRegistry.addFormatter(new RoleFormatter());
@@ -259,8 +251,6 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter {
         return shiroFilter;
     }
 
-//  @Autowired
-//  private LocalContainerEntityManagerFactoryBean entityManagerFactory;
     @Bean(name = "AASManager")
     public AASManager getAASManager() {
         AASManager manager = AASManager.getInstance();
@@ -284,16 +274,6 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter {
         return manager;
     }
 
-//    @Bean(name = "TransferService")
-//    public TransferService getTransferService() {
-//        TransferService service = TransferService.getService();
-//        try {
-//            service.init();
-//        } catch (EvaException ex) {
-//           LogService.getService(WebAppConfiguration.class).logApplicationError(ex.getMessage());
-//        }
-//        return service;
-//    }
     /**
      * Handles favicon.ico requests assuring no <code>404 Not Found</code> error
      * is returned.
@@ -306,4 +286,12 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter {
             return "forward:/WEB-INF/assets/img/favicon.ico";
         }
     }
+
+    @Bean(name = "EvaService")
+    public EvaService getEvaService() {
+        EvaService service = EvaService.getService();
+        service.init();
+        return service;
+    }
+
 }

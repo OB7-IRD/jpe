@@ -59,21 +59,33 @@ public class LogbookController {
 
     @Autowired
     private MessageSource source;
+    @Autowired
+    private EvaService evaService;
 
     @RequestMapping(
-            value = {"/", TRIP_URI, TRIP_LIST_URI},
+            value = {"/", TRIP_URI},
+            method = RequestMethod.GET
+    )
+    public ModelAndView index() {
+        ModelAndView model = new ModelAndView("trip/index");
+        model.addObject("actions", getActivities());
+        return model;
+    }
+
+    @RequestMapping(
+            value = {TRIP_LIST_URI},
             method = RequestMethod.GET
     )
     public ModelAndView list() {
         ModelAndView model = new ModelAndView("trip/list");
         model.addObject("actions", getActivities());
 
-        allTrips = EvaService.getService().findAllTrips();
+        allTrips = evaService.findAllTrips();
         model.addObject("trips", allTrips);
 
         return model;
     }
-    
+
     @RequestMapping(
             value = TRIP_TRANSFER_URI,
             method = RequestMethod.GET
@@ -95,12 +107,12 @@ public class LogbookController {
         }
         List trips = new ArrayList<>();
         for (String tn : tripNumbers) {
-            trips.add(EvaService.getService().findTrip(tn));
+            trips.add(evaService.findTrip(tn));
         }
 
         model.addAttribute("evajob", evaJob);
         model.addAttribute("trips", trips);
-        
+
         return "trip/transfer";
     }
 
@@ -113,9 +125,9 @@ public class LogbookController {
             required = true
     ) String tn, Locale locale) {
         ModelAndView model = new ModelAndView("trip/show");
-        Trip trip = EvaService.getService().findFullTrip(tn);
+        Trip trip = evaService.findFullTrip(tn);
         List<Activity> actions = getActivities();
-        actions.add(new Activity("label.action.transfer", Activity.EXECUTE, TRIP_TRANSFER_URI + "?tripNumber=" + trip.getTripNumber()));
+        actions.add(new Activity("label.action.transfer", Activity.EXECUTE, TRIP_TRANSFER_URI + "?tripNumber[]=" + trip.getTripNumber()));
         model.addObject("actions", actions);
         model.addObject("trip", trip);
         model.addObject("job", new ShowTripJob(source, locale, trip));
