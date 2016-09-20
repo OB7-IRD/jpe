@@ -27,14 +27,13 @@ package fr.ird.jpe.web.common;
  * @since 1.0
  * @date 5 févr. 2015
  *
- * $LastChangedDate$
- *
- * $LastChangedRevision$
- *
  */
 public class IconConstant {
 
-    public static final String AKADO_ICONS = "fa-recycle";
-    public static final String AKADO_OBSERVE_ICONS = "fa-binoculars";
-    public static final String AKADO_ERS_ICONS = "fa-ship";
+    public static final String JPE_ERS_ICONS = "fa-ship";
+    public static final String AAS_ICONS = "fa-ship";
+    public static final String AAS_USER_ICONS = "fa-user";
+    public static final String AAS_ROLE_ICONS = "fa-sitemap";
+    public static final String AAS_AUTH_ICONS = "fa-key";
+    
 }

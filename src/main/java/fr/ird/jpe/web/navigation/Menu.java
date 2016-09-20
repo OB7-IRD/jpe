@@ -16,6 +16,7 @@
  */
 package fr.ird.jpe.web.navigation;
 
+import fr.ird.jpe.web.common.IconConstant;
 import static fr.ird.jpe.web.controller.AASController.*;
 import static fr.ird.jpe.web.controller.LogbookController.*;
 
@@ -50,7 +51,7 @@ public class Menu {
      */
     public static Menu factoryHorizontalMenu() {
         Menu menu = new Menu();
-        MenuItem tripItem = new MenuItem(TRIP_URI, "service.menu.label.trip", "fa-ship");
+        MenuItem tripItem = new MenuItem(TRIP_URI, "service.menu.label.trip", IconConstant.JPE_ERS_ICONS);
         menu.addMenuItem(tripItem);
 
 //      menu.addMenuItem(new MenuItem("", "service.menu.label.filemanager"));
@@ -66,12 +67,12 @@ public class Menu {
     public static Menu administratorMenu() {
         Menu menu = new Menu();
 
-        MenuItem aasItem = new MenuItem(AAS_URI, "service.menu.label.aas", "fa-shield");
-        MenuItem aasSubItem = new MenuItem(AAS_USER_URI, "service.menu.label.aas.user", "fa-user");
+        MenuItem aasItem = new MenuItem(AAS_URI, "service.menu.label.aas", IconConstant.AAS_ICONS);
+        MenuItem aasSubItem = new MenuItem(AAS_USER_URI, "service.menu.label.aas.user", IconConstant.AAS_USER_ICONS);
         aasItem.addChildren(aasSubItem);
-        aasSubItem = new MenuItem(AAS_ROLE_URI, "service.menu.label.aas.role", "fa-sitemap");
+        aasSubItem = new MenuItem(AAS_ROLE_URI, "service.menu.label.aas.role", IconConstant.AAS_ROLE_ICONS);
         aasItem.addChildren(aasSubItem);
-        aasSubItem = new MenuItem(AAS_AUTH_URI, "service.menu.label.aas.authorization", "fa-key");
+        aasSubItem = new MenuItem(AAS_AUTH_URI, "service.menu.label.aas.authorization", IconConstant.AAS_AUTH_ICONS);
         aasItem.addChildren(aasSubItem);
         menu.addMenuItem(aasItem);
 
