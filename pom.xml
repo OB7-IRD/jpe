@@ -189,6 +189,11 @@
             <version>1.2</version>
             <type>jar</type>
         </dependency>
+        <dependency>    
+            <groupId>fr.ird</groupId>
+            <artifactId>driver-eva</artifactId>
+            <version>1.2</version>               
+        </dependency>      
         <dependency>
             <groupId>com.vividsolutions</groupId>
             <artifactId>jts</artifactId>

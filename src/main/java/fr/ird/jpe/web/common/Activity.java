@@ -24,10 +24,6 @@ package fr.ird.jpe.web.common;
  * @since 1.0
  * @date 3 févr. 2015
  *
- * $LastChangedDate$
- *
- * $LastChangedRevision$
- *
  */
 public class Activity {
 

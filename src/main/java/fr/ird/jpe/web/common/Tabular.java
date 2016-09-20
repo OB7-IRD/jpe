@@ -28,10 +28,6 @@ import java.util.List;
  * @since 1.0
  * @date 30 oct. 2014
  *
- * $LastChangedDate$
- *
- * $LastChangedRevision$
- *
  */
 public class Tabular {
 

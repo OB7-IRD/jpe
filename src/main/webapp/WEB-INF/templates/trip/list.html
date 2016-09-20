@@ -57,9 +57,11 @@
                 });
 
                 $('#transfer-selected-trip').click(function () {
+                    
+                    
                     var dataSelected = table.rows('.selected').data();
                     var i = 0;
-                    var url = window.location.pathname+ "/transfer";
+                    var url = /*[[@{${T(fr.ird.jpe.web.controller.LogbookController).TRIP_TRANSFER_URI}}]]*/'';
                     var tn = [];
                     for (; dataSelected[i]; ) {
                         tn[i] = dataSelected[i][0];

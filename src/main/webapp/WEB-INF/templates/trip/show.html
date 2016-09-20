@@ -291,7 +291,6 @@
                                     weight += parseFloat($(this).html());
                                 });
                             });
-//                        var rowCount = $(this).nextUntil('[id|=group-id]').length;
                             $(this).find('td').append($('<span />', {'class': 'rowgrid', text: ' ' + weight}));
                         });
                         $('.dataTables_wrapper').find('.dataTables_filter').append($('<input />', {'type': 'button', 'class': 'expandedOrCollapsedGroup collapsed btn btn-primary btn-sm', 'value': 'Expanded All Group'}));
