@@ -19,6 +19,7 @@ package fr.ird.jpe.web.config;
 import fr.ird.common.configuration.IRDProperties;
 import fr.ird.common.log.LogService;
 import java.io.File;
+import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
 /**
@@ -44,8 +45,6 @@ public final class JPEProperties extends IRDProperties {
 //
     public static final String KEY_STANDARD_DIRECTORY = "standard_directory";
     public static String STANDARD_DIRECTORY;
-    public static String WEB_SERVICE_JSON_FILE;
-    public static String AKADO_ERS_WEB_SERVICE_URI;
 
     public static final String KEY_JDBC_USERNAME = "jdbc_username";
     public static final String KEY_JDBC_PASSWORD = "jdbc_password";
@@ -84,7 +83,9 @@ public final class JPEProperties extends IRDProperties {
             JPEProperties.JDBC_PASSWORD = p.getProperty(KEY_JDBC_PASSWORD);
             JPEProperties.JDBC_URL = p.getProperty(KEY_JDBC_URL);
             JPEProperties.JDBC_DRIVER_CLASS = p.getProperty(KEY_JDBC_DRIVER_CLASS);
-
+        } catch (InvalidPropertiesFormatException e) {
+            LogService.getService(JPEProperties.class).logApplicationError("The properties files is ivalid. Please check the file's encoding (UTF-8).");
+            LogService.getService(JPEProperties.class).logApplicationError(e.getMessage());
         } catch (Exception e) {
             LogService.getService(JPEProperties.class).logApplicationError(e.getMessage());
         }
