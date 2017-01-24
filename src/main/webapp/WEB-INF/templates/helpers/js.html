@@ -19,9 +19,12 @@
                     if (lang.length > 2) {
                         lang = lang.substring(0, 2);
                     }
+                    /*<![CDATA[*/
+                    var context = [[@{/}]];
+                    /*]]>*/
                     return $(id).DataTable({
                         "language": {
-                            "url": "/assets/lib/datatables/resources/" + lang + ".json"
+                            "url": context+"assets/lib/datatables/resources/" + lang + ".json"
                         }
                     });
                 };
@@ -40,12 +43,12 @@
         </div>  
 
         <div th:fragment="maps" th:remove="tag">
-            <script src="http://openlayers.org/en/v3.2.0/build/ol.js" type="text/javascript"></script>
+            <script src="https://openlayers.org/en/v3.2.0/build/ol.js" type="text/javascript"></script>
         </div>  
 
         <div th:fragment="leaflet" th:remove="tag">
-            <link rel="stylesheet" href="https://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-            <script src="https://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+            <link rel="stylesheet" th:href="@{/assets/lib/leaflet/leaflet.css}" />
+            <script type="text/javascript" th:src="@{/assets/lib/leaflet/leaflet.js}"></script>
 
             <link rel="stylesheet" th:href="@{/assets/lib/leaflet-awesome-markers/leaflet.awesome-markers.css}" />
             <script type="text/javascript" th:src="@{/assets/lib/leaflet-awesome-markers/leaflet.awesome-markers.js}"></script>
