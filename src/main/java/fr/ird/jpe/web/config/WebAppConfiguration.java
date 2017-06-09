@@ -255,14 +255,14 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter {
     public AASManager getAASManager() {
         AASManager manager = AASManager.getInstance();
         String persitanceUnit = "jpe-aas";
-        if ("".equals(JPEProperties.JDBC_DRIVER_CLASS)) {
+        if ("".equals(JPEProperties.JDBC_DRIVER_CLASS_AAS)) {
             manager.init(persitanceUnit, true);
         } else {
             Properties properties = new Properties();
-            properties.put("javax.persistence.jdbc.url", JPEProperties.JDBC_URL);
-            properties.put("javax.persistence.jdbc.password", JPEProperties.JDBC_PASSWORD);
-            properties.put("javax.persistence.jdbc.driver", JPEProperties.JDBC_DRIVER_CLASS);
-            properties.put("javax.persistence.jdbc.user", JPEProperties.JDBC_USERNAME);
+            properties.put("javax.persistence.jdbc.url", JPEProperties.JDBC_URL_AAS);
+            properties.put("javax.persistence.jdbc.password", JPEProperties.JDBC_PASSWORD_AAS);
+            properties.put("javax.persistence.jdbc.driver", JPEProperties.JDBC_DRIVER_CLASS_AAS);
+            properties.put("javax.persistence.jdbc.user", JPEProperties.JDBC_USERNAME_AAS);
             manager.init(persitanceUnit, properties);
         }
         try {
@@ -270,7 +270,7 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter {
         } catch (UserAlreadyExistsException ex) {
             LogService.getService(WebAppConfiguration.class).logApplicationError(ex.getMessage());
         }
-
+        LogService.getService(WebAppConfiguration.class).logApplicationDebug("getAASManager initialisation... " + manager);
         return manager;
     }
 
@@ -289,8 +289,14 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean(name = "EvaService")
     public EvaService getEvaService() {
+        LogService.getService(WebAppConfiguration.class).logApplicationDebug("getEvaService initialisation... ");
         EvaService service = EvaService.getService();
-        service.init();
+        if ("".equals(JPEProperties.JDBC_DRIVER_CLASS_ERS)) {
+            service.init();
+        } else {
+            service.init(JPEProperties.JDBC_URL_ERS, JPEProperties.JDBC_DRIVER_CLASS_ERS, JPEProperties.JDBC_USERNAME_ERS, JPEProperties.JDBC_PASSWORD_ERS);
+        }
+
         return service;
     }
 

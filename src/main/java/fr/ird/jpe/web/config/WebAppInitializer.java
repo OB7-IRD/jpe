@@ -45,58 +45,63 @@ public class WebAppInitializer implements WebApplicationInitializer {
 
         //Initialisation du JPEProperties
         // Je ne sais pas si c'est le meilleur endroit
-        JPEProperties.getService().init();
-
         // Create the 'root' Spring application context
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
 
         rootContext.register(WebAppConfiguration.class, SecurityConfiguration.class);
 
         // Manage the lifecycle of the root application context
-        container.addListener(new DashContextLoaderListerner(rootContext));
+        container.addListener(new JPEContextLoaderListerner(rootContext));
 
         // Create the dispatcher servlet's Spring application context
+        LogService.getService(WebAppInitializer.class).logApplicationDebug("onStartup create dispatcherContext");
         AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
-
+        LogService.getService(WebAppInitializer.class).logApplicationDebug("onStartup dispatcherContext.setServletContext()");
         dispatcherContext.setServletContext(container);
+        LogService.getService(WebAppInitializer.class).logApplicationDebug("onStartup dispatcherContext.setParent()");
         dispatcherContext.setParent(rootContext);
+        LogService.getService(WebAppInitializer.class).logApplicationDebug("onStartup dispatcherContext.register()");
         dispatcherContext.register(WebAppConfiguration.class);
 
         // Register and map the dispatcher servlet
+        LogService.getService(WebAppInitializer.class).logApplicationDebug("onStartup create dispatcher");
         ServletRegistration.Dynamic dispatcher = container.addServlet("dispatcher",
                 new DispatcherServlet(dispatcherContext));
-
+        LogService.getService(WebAppInitializer.class).logApplicationDebug("onStartup dispatcher.setLoadOnStartup()");
         dispatcher.setLoadOnStartup(1);
+        LogService.getService(WebAppInitializer.class).logApplicationDebug("onStartup dispatcher.addMapping()");
         dispatcher.addMapping("/");
+        LogService.getService(WebAppInitializer.class).logApplicationDebug("onStartup dispatcher.addFilter()");
         container.addFilter("shiroFilter",
                 new DelegatingFilterProxy("shiroFilterBean",
                         dispatcherContext)).addMappingForUrlPatterns(null, false, "/*");
     }
 
-    public class DashContextLoaderListerner extends ContextLoaderListener {
+    public class JPEContextLoaderListerner extends ContextLoaderListener {
 
-        public DashContextLoaderListerner(AnnotationConfigWebApplicationContext rootContext) {
+        public JPEContextLoaderListerner(AnnotationConfigWebApplicationContext rootContext) {
             super(rootContext);
         }
 
         @Override
         public void contextDestroyed(ServletContextEvent event) {
             super.contextDestroyed(event);
+            ClassLoader cl = Thread.currentThread().getContextClassLoader();
             LogService.getService(WebAppInitializer.class).logApplicationDebug("ServletContextListener destroyed");
             Enumeration<Driver> drivers = DriverManager.getDrivers();
 
             while (drivers.hasMoreElements()) {
                 Driver driver = drivers.nextElement();
+                if (driver.getClass().getClassLoader() == cl) {
+                    try {
+                        DriverManager.deregisterDriver(driver);
 
-                try {
-                    DriverManager.deregisterDriver(driver);
-
-                } catch (SQLException e) {
-                    LogService.getService(WebAppInitializer.class).logApplicationError(String.format("Error deregistering driver %s", driver));
-                    LogService.getService(WebAppInitializer.class).logApplicationError(e.getMessage());
+                    } catch (SQLException e) {
+                        LogService.getService(WebAppInitializer.class).logApplicationError(String.format("Error deregistering driver %s", driver));
+                        LogService.getService(WebAppInitializer.class).logApplicationError(e.getMessage());
+                    }
                 }
             }
-
         }
 
         @Override

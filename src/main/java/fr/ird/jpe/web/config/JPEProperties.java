@@ -18,6 +18,7 @@ package fr.ird.jpe.web.config;
 
 import fr.ird.common.configuration.IRDProperties;
 import fr.ird.common.log.LogService;
+import fr.ird.driver.eva.business.Position;
 import java.io.File;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
@@ -46,15 +47,25 @@ public final class JPEProperties extends IRDProperties {
     public static final String KEY_STANDARD_DIRECTORY = "standard_directory";
     public static String STANDARD_DIRECTORY;
 
-    public static final String KEY_JDBC_USERNAME = "jdbc_username";
-    public static final String KEY_JDBC_PASSWORD = "jdbc_password";
-    public static final String KEY_JDBC_URL = "jdbc_url";
-    public static final String KEY_JDBC_DRIVER_CLASS = "jdbc_driver";
+    public static final String KEY_JDBC_USERNAME_AAS = "jdbc_username_aas";
+    public static final String KEY_JDBC_PASSWORD_AAS = "jdbc_password_aas";
+    public static final String KEY_JDBC_URL_AAS = "jdbc_url_aas";
+    public static final String KEY_JDBC_DRIVER_CLASS_AAS = "jdbc_driver_aas";
 
-    public static String JDBC_USERNAME;
-    public static String JDBC_PASSWORD;
-    public static String JDBC_URL;
-    public static String JDBC_DRIVER_CLASS;
+    public static final String KEY_JDBC_USERNAME_ERS = "jdbc_username_ers";
+    public static final String KEY_JDBC_PASSWORD_ERS = "jdbc_password_ers";
+    public static final String KEY_JDBC_URL_ERS = "jdbc_url_ers";
+    public static final String KEY_JDBC_DRIVER_CLASS_ERS = "jdbc_driver_ers";
+
+    public static String JDBC_USERNAME_AAS;
+    public static String JDBC_PASSWORD_AAS;
+    public static String JDBC_URL_AAS;
+    public static String JDBC_DRIVER_CLASS_AAS;
+
+    public static String JDBC_USERNAME_ERS;
+    public static String JDBC_PASSWORD_ERS;
+    public static String JDBC_URL_ERS;
+    public static String JDBC_DRIVER_CLASS_ERS;
 
     private JPEProperties() {
         PROJECT_NAME = "jpe-web";
@@ -79,10 +90,15 @@ public final class JPEProperties extends IRDProperties {
                 LogService.getService(JPEProperties.class).logApplicationDebug("Property : (" + k + "," + p.getProperty(k) + ")");
             }
             JPEProperties.STANDARD_DIRECTORY = p.getProperty(KEY_STANDARD_DIRECTORY);
-            JPEProperties.JDBC_USERNAME = p.getProperty(KEY_JDBC_USERNAME);
-            JPEProperties.JDBC_PASSWORD = p.getProperty(KEY_JDBC_PASSWORD);
-            JPEProperties.JDBC_URL = p.getProperty(KEY_JDBC_URL);
-            JPEProperties.JDBC_DRIVER_CLASS = p.getProperty(KEY_JDBC_DRIVER_CLASS);
+            JPEProperties.JDBC_USERNAME_AAS = p.getProperty(KEY_JDBC_USERNAME_AAS);
+            JPEProperties.JDBC_PASSWORD_AAS = p.getProperty(KEY_JDBC_PASSWORD_AAS);
+            JPEProperties.JDBC_URL_AAS = p.getProperty(KEY_JDBC_URL_AAS);
+            JPEProperties.JDBC_DRIVER_CLASS_AAS = p.getProperty(KEY_JDBC_DRIVER_CLASS_AAS);
+
+            JPEProperties.JDBC_USERNAME_ERS = p.getProperty(KEY_JDBC_USERNAME_ERS);
+            JPEProperties.JDBC_PASSWORD_ERS = p.getProperty(KEY_JDBC_PASSWORD_ERS);
+            JPEProperties.JDBC_URL_ERS = p.getProperty(KEY_JDBC_URL_ERS);
+            JPEProperties.JDBC_DRIVER_CLASS_ERS = p.getProperty(KEY_JDBC_DRIVER_CLASS_ERS);
         } catch (InvalidPropertiesFormatException e) {
             LogService.getService(JPEProperties.class).logApplicationError("The properties files is ivalid. Please check the file's encoding (UTF-8).");
             LogService.getService(JPEProperties.class).logApplicationError(e.getMessage());
@@ -98,10 +114,14 @@ public final class JPEProperties extends IRDProperties {
         Properties properties = new Properties();
         properties.setProperty(KEY_STANDARD_DIRECTORY, PROJECT_CONFIG_ABSOLUTE_PATH + File.separator + STANDARD_RELATIVE_CONFIG_PATH);
 
-        properties.setProperty(KEY_JDBC_URL, "");
-        properties.setProperty(KEY_JDBC_DRIVER_CLASS, "");
-        properties.setProperty(KEY_JDBC_USERNAME, "");
-        properties.setProperty(KEY_JDBC_PASSWORD, "");
+        properties.setProperty(KEY_JDBC_URL_AAS, "");
+        properties.setProperty(KEY_JDBC_DRIVER_CLASS_AAS, "");
+        properties.setProperty(KEY_JDBC_USERNAME_AAS, "");
+        properties.setProperty(KEY_JDBC_PASSWORD_AAS, "");
+        properties.setProperty(KEY_JDBC_URL_ERS, "");
+        properties.setProperty(KEY_JDBC_DRIVER_CLASS_ERS, "");
+        properties.setProperty(KEY_JDBC_USERNAME_ERS, "");
+        properties.setProperty(KEY_JDBC_PASSWORD_ERS, "");
 
         return properties;
     }
@@ -124,5 +144,26 @@ public final class JPEProperties extends IRDProperties {
 
     @Override
     public void copyDefaultFile() {
+    }
+
+    public static Position getHarbourPosition(String locode) {
+        switch (locode) {
+            case "SNDKR":
+                return new Position(14.764, -17.366);
+            case "CIABJ":
+                return new Position(5.319, -4.034);
+            case "GHTEM":
+                return new Position(5.666, 0d);
+            case "SCVIC":
+                return new Position(-4.37, 55.27);
+            case "MUPLU":
+                return new Position(-20.167, 57.517);
+            case "FRCOC":
+                return new Position(47.867, -3.917);
+            case "REREU":
+                return new Position(-20.860, 55.450);
+            default:
+                return new Position(0d, 0d);
+        }
     }
 }
