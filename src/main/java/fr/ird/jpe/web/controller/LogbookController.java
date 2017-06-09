@@ -59,8 +59,8 @@ public class LogbookController {
 
     @Autowired
     private MessageSource source;
-    @Autowired
-    private EvaService evaService;
+//    @Autowired
+//    private EvaService evaService;
 
     @RequestMapping(
             value = {"/", TRIP_URI},
@@ -79,8 +79,8 @@ public class LogbookController {
     public ModelAndView list() {
         ModelAndView model = new ModelAndView("trip/list");
         model.addObject("actions", getActivities());
-
-        allTrips = evaService.findAllTrips();
+        
+        allTrips = EvaService.getService().findAllTrips();
         model.addObject("trips", allTrips);
 
         return model;
@@ -107,7 +107,7 @@ public class LogbookController {
         }
         List trips = new ArrayList<>();
         for (String tn : tripNumbers) {
-            trips.add(evaService.findTrip(tn));
+            trips.add(EvaService.getService().findTrip(tn));
         }
 
         model.addAttribute("evajob", evaJob);
@@ -125,7 +125,7 @@ public class LogbookController {
             required = true
     ) String tn, Locale locale) {
         ModelAndView model = new ModelAndView("trip/show");
-        Trip trip = evaService.findFullTrip(tn);
+        Trip trip = EvaService.getService().findFullTrip(tn);
         List<Activity> actions = getActivities();
         actions.add(new Activity("label.action.transfer", Activity.EXECUTE, TRIP_TRANSFER_URI + "?tripNumber[]=" + trip.getTripNumber()));
         model.addObject("actions", actions);
@@ -133,7 +133,6 @@ public class LogbookController {
         model.addObject("job", new ShowTripJob(source, locale, trip));
         model.addObject("map", new MapTripJob(source, locale, trip));
 
-//      model.addObject("chartList", charts);
         return model;
     }
 }

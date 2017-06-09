@@ -17,7 +17,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     Created on : 17 janv. 2016, 14:08:15
     Author     : Julien Lebranchu <julien.lebranchu@ird.fr>
 */
-
+#wrap{
+    min-height: 800px;
+}
 .logo{
     margin-top: -15px;
     height: 50px;

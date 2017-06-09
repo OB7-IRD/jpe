@@ -42,9 +42,9 @@
             <!--<property name="eclipselink.create-ddl-jdbc-file-name" value="createDDL_ddlGeneration.jdbc"/>-->
             <!--<property name="eclipselink.drop-ddl-jdbc-file-name" value="dropDDL_ddlGeneration.jdbc"/>-->
             <!--<property name="eclipselink.ddl-generation.output-mode" value="both"/>-->
-            <!--<property name="eclipselink.ddl-generation" value="none"/>-->
+            <property name="eclipselink.ddl-generation" value="none"/>
             <!--Creer la base de donnée-->
-            <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+            <!--<property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>-->
             <!-- Configure simple SQL logging for demonstration. -->
             <property name="eclipselink.logging.level" value="OFF"/>
             <property name="eclipselink.logging.thread" value="false"/>

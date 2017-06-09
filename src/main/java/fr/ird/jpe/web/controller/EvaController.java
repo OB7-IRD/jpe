@@ -17,6 +17,7 @@
 package fr.ird.jpe.web.controller;
 
 import fr.ird.common.log.LogService;
+import fr.ird.common.message.Flux;
 import fr.ird.common.message.Message;
 import fr.ird.jpe.web.utils.WebUtils;
 import fr.ird.jpe.web.controller.model.EvaJob;
@@ -96,10 +97,13 @@ public class EvaController {
             }
 
             transferService.executeTransfer(evajob.getTripNumbers());
+            Flux flux;
             for (String tn : evajob.getTripNumbers()) {
-                for (Message m : MessageService.getFlux(tn).getMessages()) {
+                flux = MessageService.getFlux(tn);
+                for (Message m : flux.getMessages()) {
                     messages.add(m.displayMessage(Locale.FRANCE));
                 }
+                MessageService.detachFlux(tn, flux);
             }
 
         } catch (EvaException | EvaDriverException ex) {
