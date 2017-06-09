@@ -20,10 +20,13 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Point;
+import fr.ird.driver.eva.business.ActivityDepartureToPort;
+import fr.ird.driver.eva.business.ActivityReturnToPort;
 import fr.ird.jpe.web.utils.FeatureToGeoJson;
 import fr.ird.driver.eva.business.FishingEvent;
 import fr.ird.driver.eva.business.Position;
 import fr.ird.driver.eva.business.Trip;
+import fr.ird.jpe.web.config.JPEProperties;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -73,6 +76,12 @@ public class MapTripJob extends AbstractShowJob {
         for (FishingEvent fe : trip.getFishingEvents()) {
             if (fe.getPosition() != null) {
                 current = fe.getPosition();
+            } else if (ActivityDepartureToPort.TYPE.equals(fe.getType())) {
+                ActivityDepartureToPort adtp = (ActivityDepartureToPort) fe;
+                current = JPEProperties.getHarbourPosition(adtp.getPortOfDeparture());
+            } else if (ActivityReturnToPort.TYPE.equals(fe.getType())) {
+                ActivityReturnToPort rdtp = (ActivityReturnToPort) fe;
+                current = JPEProperties.getHarbourPosition(rdtp.getPortOfReturn());
             } else {
                 current = new Position(0d, 0d);
             }

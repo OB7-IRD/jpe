@@ -98,6 +98,9 @@ public class ColorUtils {
     }
 
     public static HexColor getColorFromSpecie(String specie) {
+        if(specie==null){
+            return randomColor();
+        }
         int size = 0;
 
         if (specie.length() == 5) {

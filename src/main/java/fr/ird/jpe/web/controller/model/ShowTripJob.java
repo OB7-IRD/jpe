@@ -17,7 +17,10 @@
 package fr.ird.jpe.web.controller.model;
 
 import com.googlecode.wickedcharts.highcharts.options.color.HexColor;
+import com.googlecode.wickedcharts.highcharts.options.series.Point;
 import com.googlecode.wickedcharts.highcharts.options.series.SimpleSeries;
+import fr.ird.common.Utils;
+import fr.ird.common.log.LogService;
 import fr.ird.jpe.web.common.Tabular;
 import fr.ird.jpe.web.utils.ChartsUtils;
 import fr.ird.jpe.web.utils.ColorUtils;
@@ -28,6 +31,7 @@ import fr.ird.driver.eva.business.FishingEvent;
 import fr.ird.driver.eva.business.Trip;
 import fr.ird.highcharts.AbstractChart;
 import fr.ird.highcharts.Donut;
+import fr.ird.highcharts.Pie;
 import fr.ird.highcharts.StackedAndGroupedColumn;
 import fr.ird.highcharts.donut.InsideData;
 import fr.ird.highcharts.donut.OutsideData;
@@ -76,7 +80,75 @@ public class ShowTripJob extends AbstractShowJob {
         return speciesByCatchChart;
     }
 
+    private void createSpeciesByCatchWithoutSizeComposition(Trip trip) {
+        List categories = new ArrayList<>();
+        List data = new ArrayList<>();
+        Map map = new TreeMap<String, List>();
+        String name;
+
+        for (FishingEvent fe : trip.getFishingEvents()) {
+            categories.add(DateUtils.format(fe.getDateOfFishingEvent()));
+
+            if (fe instanceof FishingActivity) {
+                FishingActivity fa = (FishingActivity) fe;
+
+//              System.out.println("FA " + fa);
+                String key;
+                List tmp = new ArrayList<>();
+
+//              for (Capture c : trip.getElementaryCapturesFrom(trip.getFishingEvents())) {
+                for (Capture c : fa.getElementaryCaptures()) {
+
+//                  System.out.println("EC " + c);
+                    key = c.getSpecie().getNameOfSpecies();
+
+                    if (map.containsKey(key)) {
+                        tmp = (List) map.get(key);
+
+                        if (tmp == null) {
+                            tmp = new ArrayList<>();
+                        }
+
+                        tmp.add(c.getSpecie().getWeightOfFish());
+
+//                      System.out.println("KEY " + key + " -- " + c.getSpecie().getWeightOfFish());
+                    } else {
+                        tmp = new ArrayList<>();
+                        tmp.add(c.getSpecie().getWeightOfFish());
+                    }
+
+                    map.put(key, tmp);
+                }
+            }
+        }
+
+        for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
+            Map.Entry<String, List> entry = (Map.Entry<String, List>) it.next();
+
+            name = entry.getKey();
+            data.add(
+                    new SimpleSeries().setStack(name).setName(name).setData(entry.getValue()).setColor(
+                            ColorUtils.getColorFromSpecie(name)));
+        }
+
+        speciesByCatchChart = new StackedAndGroupedColumn("speciesByCatchChart",
+                getMessage("title.main.species.bycatch.chart"), getMessage("title.xaxis.species.bycatch.chart"),
+                getMessage("title.yaxis.species.bycatch.chart"), categories, data);
+    }
+
     private void createSpeciesByCatch(Trip trip) {
+        boolean hasSizeCompositionInformation = false;
+
+        for (Capture c : trip.getElementaryCapturesFrom(trip.getFishingEvents())) {
+            hasSizeCompositionInformation |= "".equals(c.getSpecie().getSizeComposition());
+            if (hasSizeCompositionInformation) {
+                createSpeciesByCatchWithSizeComposition(trip);
+            }
+        }
+        createSpeciesByCatchWithoutSizeComposition(trip);
+    }
+
+    private void createSpeciesByCatchWithSizeComposition(Trip trip) {
         List categories = new ArrayList<>();
         List data = new ArrayList<>();
         Map map = new TreeMap<String, List>();
@@ -128,7 +200,7 @@ public class ShowTripJob extends AbstractShowJob {
             name = entry.getKey().split("//")[1];
             data.add(
                     new SimpleSeries().setStack(stack).setName(name).setData(entry.getValue()).setColor(
-                    ColorUtils.getColorFromSpecie(name)));
+                            ColorUtils.getColorFromSpecie(name)));
         }
 
         speciesByCatchChart = new StackedAndGroupedColumn("speciesByCatchChart",
@@ -136,7 +208,52 @@ public class ShowTripJob extends AbstractShowJob {
                 getMessage("title.yaxis.species.bycatch.chart"), categories, data);
     }
 
-    private void createSpeciesDistribution(Trip trip) {
+    private void createSpeciesDistributionWithoutSizeComposition(Trip trip) {
+        Map<String, SpeciesData> data = new TreeMap<>();
+        String key;
+        Double totalWeight = 0d;
+
+        for (Capture c : trip.getElementaryCapturesFrom(trip.getFishingEvents())) {
+            key = c.getSpecie().getNameOfSpecies();
+            totalWeight += c.getSpecie().getWeightOfFish();
+            if (data.containsKey(key)) {
+                SpeciesData sd = (SpeciesData) data.get(key);
+
+                sd.setWeight(c.getSpecie().getWeightOfFish() + sd.getWeight());
+                data.put(key, sd);
+            } else {
+                data.put(key, new SpeciesData(c.getSpecie().getNameOfSpecies(), "",
+                        c.getSpecie().getWeightOfFish()));
+            }
+        }
+        List series = new ArrayList();
+        List speciesData = new ArrayList<>();
+        for (Iterator it = data.entrySet().iterator(); it.hasNext();) {
+            Map.Entry<String, SpeciesData> entry = (Map.Entry<String, SpeciesData>) it.next();
+            SpeciesData sd = entry.getValue();
+            LogService.getService(this.getClass()).logApplicationInfo(entry + " " + sd.toString());
+            series.add(
+                    new Point().setName(sd.getName()).setY(Utils.round(sd.getWeight(), 2)).setColor(
+                            ColorUtils.getColorFromSpecie(sd.getName())));
+            speciesData.add(sd);
+        }
+
+        speciesDistributionChart = new Pie("speciesDistributionChart",
+                getMessage("title.main.species.distribution.chart"),
+                series, "speciesDistribution");
+
+        List headers = new ArrayList<>();
+
+        headers.add(getMessage("label.specie.name"));
+        headers.add(getMessage("label.specie.size"));
+        headers.add(getMessage("label.specie.weight"));
+
+        List footers = new ArrayList<>();
+
+        speciesDistributionTable = new Tabular(headers, footers, speciesData);
+    }
+
+    private void createSpeciesDistributionWithSizeComposition(Trip trip) {
 
 //      System.out.println("TRIP in speciesDistribution " + trip);
         Map<String, Map<String, SpeciesData>> data = new TreeMap<>();
@@ -221,6 +338,18 @@ public class ShowTripJob extends AbstractShowJob {
         List footers = new ArrayList<>();
 
         speciesDistributionTable = new Tabular(headers, footers, speciesData);
+    }
+
+    private void createSpeciesDistribution(Trip trip) {
+        boolean hasSizeCompositionInformation = false;
+
+        for (Capture c : trip.getElementaryCapturesFrom(trip.getFishingEvents())) {
+            hasSizeCompositionInformation |= "".equals(c.getSpecie().getSizeComposition());
+            if (hasSizeCompositionInformation) {
+                createSpeciesDistributionWithSizeComposition(trip);
+            }
+        }
+        createSpeciesDistributionWithoutSizeComposition(trip);
     }
 
     public class SpeciesData {
