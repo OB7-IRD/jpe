@@ -27,7 +27,8 @@ import java.util.Properties;
  * The JPEProperties class represents a persistent set of properties. This
  * properties are stored in the file "eva-config.xml". J'utilise cette classe
  * dans un projet Spring par cohérence avec les autres projets de l'OT. Une
- * solution en utilisant les fichiers configurations Spring aurait été possible.
+ * solution en utilisant les fichiers configurations Spring aurait été
+ * possible.
  *
  * @author Julien Lebranchu <julien.lebranchu@ird.fr>
  * @since 1.0
@@ -52,20 +53,20 @@ public final class JPEProperties extends IRDProperties {
     public static final String KEY_JDBC_URL_AAS = "jdbc_url_aas";
     public static final String KEY_JDBC_DRIVER_CLASS_AAS = "jdbc_driver_aas";
 
-    public static final String KEY_JDBC_USERNAME_ERS = "jdbc_username_ers";
-    public static final String KEY_JDBC_PASSWORD_ERS = "jdbc_password_ers";
-    public static final String KEY_JDBC_URL_ERS = "jdbc_url_ers";
-    public static final String KEY_JDBC_DRIVER_CLASS_ERS = "jdbc_driver_ers";
+    public static final String KEY_JDBC_USERNAME_EVA = "jdbc_username_eva";
+    public static final String KEY_JDBC_PASSWORD_EVA = "jdbc_password_eva";
+    public static final String KEY_JDBC_URL_EVA = "jdbc_url_eva";
+    public static final String KEY_JDBC_DRIVER_CLASS_EVA = "jdbc_driver_eva";
 
     public static String JDBC_USERNAME_AAS;
     public static String JDBC_PASSWORD_AAS;
     public static String JDBC_URL_AAS;
     public static String JDBC_DRIVER_CLASS_AAS;
 
-    public static String JDBC_USERNAME_ERS;
-    public static String JDBC_PASSWORD_ERS;
-    public static String JDBC_URL_ERS;
-    public static String JDBC_DRIVER_CLASS_ERS;
+    public static String JDBC_USERNAME_EVA;
+    public static String JDBC_PASSWORD_EVA;
+    public static String JDBC_URL_EVA;
+    public static String JDBC_DRIVER_CLASS_EVA;
 
     private JPEProperties() {
         PROJECT_NAME = "jpe-web";
@@ -95,10 +96,10 @@ public final class JPEProperties extends IRDProperties {
             JPEProperties.JDBC_URL_AAS = p.getProperty(KEY_JDBC_URL_AAS);
             JPEProperties.JDBC_DRIVER_CLASS_AAS = p.getProperty(KEY_JDBC_DRIVER_CLASS_AAS);
 
-            JPEProperties.JDBC_USERNAME_ERS = p.getProperty(KEY_JDBC_USERNAME_ERS);
-            JPEProperties.JDBC_PASSWORD_ERS = p.getProperty(KEY_JDBC_PASSWORD_ERS);
-            JPEProperties.JDBC_URL_ERS = p.getProperty(KEY_JDBC_URL_ERS);
-            JPEProperties.JDBC_DRIVER_CLASS_ERS = p.getProperty(KEY_JDBC_DRIVER_CLASS_ERS);
+            JPEProperties.JDBC_USERNAME_EVA = p.getProperty(KEY_JDBC_USERNAME_EVA);
+            JPEProperties.JDBC_PASSWORD_EVA = p.getProperty(KEY_JDBC_PASSWORD_EVA);
+            JPEProperties.JDBC_URL_EVA = p.getProperty(KEY_JDBC_URL_EVA);
+            JPEProperties.JDBC_DRIVER_CLASS_EVA = p.getProperty(KEY_JDBC_DRIVER_CLASS_EVA);
         } catch (InvalidPropertiesFormatException e) {
             LogService.getService(JPEProperties.class).logApplicationError("The properties files is ivalid. Please check the file's encoding (UTF-8).");
             LogService.getService(JPEProperties.class).logApplicationError(e.getMessage());
@@ -118,10 +119,10 @@ public final class JPEProperties extends IRDProperties {
         properties.setProperty(KEY_JDBC_DRIVER_CLASS_AAS, "");
         properties.setProperty(KEY_JDBC_USERNAME_AAS, "");
         properties.setProperty(KEY_JDBC_PASSWORD_AAS, "");
-        properties.setProperty(KEY_JDBC_URL_ERS, "");
-        properties.setProperty(KEY_JDBC_DRIVER_CLASS_ERS, "");
-        properties.setProperty(KEY_JDBC_USERNAME_ERS, "");
-        properties.setProperty(KEY_JDBC_PASSWORD_ERS, "");
+        properties.setProperty(KEY_JDBC_URL_EVA, "");
+        properties.setProperty(KEY_JDBC_DRIVER_CLASS_EVA, "");
+        properties.setProperty(KEY_JDBC_USERNAME_EVA, "");
+        properties.setProperty(KEY_JDBC_PASSWORD_EVA, "");
 
         return properties;
     }

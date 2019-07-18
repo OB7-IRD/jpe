@@ -291,10 +291,10 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter {
     public EvaService getEvaService() {
         LogService.getService(WebAppConfiguration.class).logApplicationDebug("getEvaService initialisation... ");
         EvaService service = EvaService.getService();
-        if ("".equals(JPEProperties.JDBC_DRIVER_CLASS_ERS)) {
+        if ("".equals(JPEProperties.JDBC_DRIVER_CLASS_EVA)) {
             service.init();
         } else {
-            service.init(JPEProperties.JDBC_URL_ERS, JPEProperties.JDBC_DRIVER_CLASS_ERS, JPEProperties.JDBC_USERNAME_ERS, JPEProperties.JDBC_PASSWORD_ERS);
+            service.init(JPEProperties.JDBC_URL_EVA, JPEProperties.JDBC_DRIVER_CLASS_EVA, JPEProperties.JDBC_USERNAME_EVA, JPEProperties.JDBC_PASSWORD_EVA);
         }
 
         return service;
