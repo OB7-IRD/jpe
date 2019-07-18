@@ -29,9 +29,9 @@
                         <td data-th-text="${trip.tripNumber}">1</td>
                         <td data-th-text="${trip.vessel.vesselCFRId}">Vessel CFR Id</td>
                         <td data-th-text="${trip.vessel.vesselName}">Vessel Name</td>
-                        <td data-th-text="${#joda.mediumDate(trip.dateOfDep)}" class="text-center">DEP</td>
-                        <td data-th-text="${#joda.shortTime(trip.dateOfDep)}" class="text-center">DEP</td>
-                        <td th:if="${trip.dateOfRtp}" th:text="${#joda.mediumDate(trip.dateOfRtp)}">RTP</td>
+                        <td data-th-text="${trip.dateOfDep}" class="text-center">DEP</td>
+                        <td data-th-text="${trip.dateOfDep}" class="text-center">DEP</td>
+                        <td th:if="${trip.dateOfRtp}" th:text="${trip.dateOfRtp}">RTP</td>
                         <td th:unless="${trip.dateOfRtp}" th:text="#{label.trip.unfinished}" class="btn-danger">RTP</td>
                         <td class="text-center"> 
                             <i th:if="${trip.partialLanding}" class="fa fa-check-square-o"></i>
@@ -64,11 +64,11 @@
                         <dt th:text="#{label.vessel.name}">Vessel Name</dt>
                         <dd th:text="${trip.vessel.vesselName}">Vessel Name</dd>
                         <dt th:text="#{label.departure.date}">Departure Date</dt>
-                        <dd th:text="${#joda.mediumDate(trip.dateOfDep)}">DEP</dd>
+                        <dd th:text="${trip.dateOfDep}">DEP</dd>
                         <dt th:text="#{label.departure.time}">Departure Time</dt>
-                        <dd th:text="${#joda.shortTime(trip.dateOfDep)}" >DEP</dd>
+                        <dd th:text="${trip.dateOfDep}" >DEP</dd>
                         <dt th:text="#{label.rtp.date}">RTP</dt>                 
-                        <dd th:if="${trip.dateOfRtp}" th:text="${#joda.mediumDate(trip.dateOfRtp)}">RTP</dd>
+                        <dd th:if="${trip.dateOfRtp}" th:text="${trip.dateOfRtp}">RTP</dd>
                         <dd th:unless="${trip.dateOfRtp}" th:text="#{label.trip.unfinished}" class="btn-danger">RTP</dd>
                         <dt th:text="#{label.partial.landing}">Part. Landing</dt>
                         <dd> 
