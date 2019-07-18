@@ -16,6 +16,7 @@
  */
 package fr.ird.jpe.web.controller;
 
+import fr.ird.common.log.LogService;
 import fr.ird.jpe.web.common.Activity;
 import fr.ird.jpe.web.controller.model.EvaJob;
 import fr.ird.jpe.web.controller.model.MapTripJob;
@@ -44,19 +45,19 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class LogbookController {
-
+    
     public List<Activity> getActivities() {
         ArrayList<Activity> actions = new ArrayList();
         actions.add(new Activity("label.trip.all", Activity.LISTING, TRIP_LIST_URI));
         return actions;
     }
-
+    
     public final static String TRIP_URI = "/trip";
     public final static String TRIP_LIST_URI = TRIP_URI + "/list";
     public final static String TRIP_TRANSFER_URI = TRIP_URI + "/transfer";
     public final static String TRIP_SHOW_URI = TRIP_URI + "/show";
     private List<Trip> allTrips;
-
+    
     @Autowired
     private MessageSource source;
 //    @Autowired
@@ -71,7 +72,7 @@ public class LogbookController {
         model.addObject("actions", getActivities());
         return model;
     }
-
+    
     @RequestMapping(
             value = {TRIP_LIST_URI},
             method = RequestMethod.GET
@@ -81,11 +82,12 @@ public class LogbookController {
         model.addObject("actions", getActivities());
         
         allTrips = EvaService.getService().findAllTrips();
+        LogService.getService(this.getClass()).logApplicationDebug("" + allTrips.size());
         model.addObject("trips", allTrips);
-
+        
         return model;
     }
-
+    
     @RequestMapping(
             value = TRIP_TRANSFER_URI,
             method = RequestMethod.GET
@@ -97,7 +99,7 @@ public class LogbookController {
         model.addAttribute("actions", getActivities());
         List<String> tripNumbers = tripNumber;
         EvaJob evaJob;
-
+        
         if (!model.containsAttribute("evajob")) {
             evaJob = new EvaJob();
             evaJob.setTripNumbers(tripNumbers);
@@ -109,13 +111,13 @@ public class LogbookController {
         for (String tn : tripNumbers) {
             trips.add(EvaService.getService().findTrip(tn));
         }
-
+        
         model.addAttribute("evajob", evaJob);
         model.addAttribute("trips", trips);
-
+        
         return "trip/transfer";
     }
-
+    
     @RequestMapping(
             value = TRIP_SHOW_URI,
             method = RequestMethod.GET
@@ -132,7 +134,7 @@ public class LogbookController {
         model.addObject("trip", trip);
         model.addObject("job", new ShowTripJob(source, locale, trip));
         model.addObject("map", new MapTripJob(source, locale, trip));
-
+        
         return model;
     }
 }
