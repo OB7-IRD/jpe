@@ -78,10 +78,10 @@ public class MapTripJob extends AbstractShowJob {
                 current = fe.getPosition();
             } else if (ActivityDepartureToPort.TYPE.equals(fe.getType())) {
                 ActivityDepartureToPort adtp = (ActivityDepartureToPort) fe;
-                current = JPEProperties.getHarbourPosition(adtp.getPortOfDeparture());
+                current = JPEProperties.getHarbourPosition(adtp.getPortOfDeparture().getLocode());
             } else if (ActivityReturnToPort.TYPE.equals(fe.getType())) {
                 ActivityReturnToPort rdtp = (ActivityReturnToPort) fe;
-                current = JPEProperties.getHarbourPosition(rdtp.getPortOfReturn());
+                current = JPEProperties.getHarbourPosition(rdtp.getPortOfReturn().getLocode());
             } else {
                 current = new Position(0d, 0d);
             }
@@ -89,14 +89,14 @@ public class MapTripJob extends AbstractShowJob {
             feature = buildFeatureForFishingEvent("fishingEvent" + i,
                     vesselName,
                     fe.getType(),
-                    fe.getDateOfFishingEvent(),
+                    new DateTime(fe.getDateOfFishingEvent()),
                     current
             );
             features.add(feature);
 //            System.out.println("FEATURE " + feature);
             i++;
         }
-        feature = buildFeatureForVesselPath("vesselPath", vesselName, trip.getDateOfDep(), trip.getDateOfRtp(), positions);
+        feature = buildFeatureForVesselPath("vesselPath", vesselName, new DateTime(trip.getDateOfDep()), new DateTime(trip.getDateOfRtp()), positions);
 //        System.out.println("FEATURE " + feature);
         features.add(feature);
 //        System.out.println("FEATURES " + features);

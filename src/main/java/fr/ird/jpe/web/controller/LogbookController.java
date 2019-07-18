@@ -125,7 +125,7 @@ public class LogbookController {
             required = true
     ) String tn, Locale locale) {
         ModelAndView model = new ModelAndView("trip/show");
-        Trip trip = EvaService.getService().findFullTrip(tn);
+        Trip trip = EvaService.getService().findTrip(tn);
         List<Activity> actions = getActivities();
         actions.add(new Activity("label.action.transfer", Activity.EXECUTE, TRIP_TRANSFER_URI + "?tripNumber[]=" + trip.getTripNumber()));
         model.addObject("actions", actions);

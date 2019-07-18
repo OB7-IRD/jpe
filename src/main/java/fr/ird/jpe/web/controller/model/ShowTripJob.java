@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
+import org.joda.time.DateTime;
 import org.springframework.context.MessageSource;
 
 /**
@@ -87,7 +88,7 @@ public class ShowTripJob extends AbstractShowJob {
         String name;
 
         for (FishingEvent fe : trip.getFishingEvents()) {
-            categories.add(DateUtils.format(fe.getDateOfFishingEvent()));
+            categories.add(DateUtils.format(new DateTime(fe.getDateOfFishingEvent())));
 
             if (fe instanceof FishingActivity) {
                 FishingActivity fa = (FishingActivity) fe;
@@ -156,7 +157,7 @@ public class ShowTripJob extends AbstractShowJob {
         String name;
 
         for (FishingEvent fe : trip.getFishingEvents()) {
-            categories.add(DateUtils.format(fe.getDateOfFishingEvent()));
+            categories.add(DateUtils.format(new DateTime(fe.getDateOfFishingEvent())));
 
             if (fe instanceof FishingActivity) {
                 FishingActivity fa = (FishingActivity) fe;

@@ -22,7 +22,7 @@ import fr.ird.common.message.Message;
 import fr.ird.jpe.web.utils.WebUtils;
 import fr.ird.jpe.web.controller.model.EvaJob;
 import fr.ird.jpe.web.validator.EvaJobValidator;
-import fr.ird.driver.eva.common.exception.EvaDriverException;
+import fr.ird.driver.eva.exception.EvaDriverException;
 import fr.ird.eva.common.exception.EvaException;
 import fr.ird.eva.common.service.MessageService;
 import fr.ird.eva.core.service.TransferService;
