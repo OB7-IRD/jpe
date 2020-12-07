@@ -70,7 +70,7 @@ public class MapTripJob extends AbstractShowJob {
         SimpleFeature feature;
         features = new DefaultFeatureCollection();
         int i = 0;
-        List<Position> positions = new ArrayList();
+        List<Position> positions = new ArrayList<>();
         Position current = null;
         String vesselName = trip.getVessel().getVesselName();
         for (FishingEvent fe : trip.getFishingEvents()) {

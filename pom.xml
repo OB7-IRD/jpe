@@ -5,15 +5,15 @@
 
     <groupId>fr.ird</groupId>
     <artifactId>jpe</artifactId>
-    <version>1.1.0</version>
+    <version>1.0.1</version>
     <packaging>war</packaging>
 
     <name>JPE</name>
     <description>Projet JPE: création d'une interface de visualisation et de téléchargement des données du JPE.</description>
     <inceptionYear>2014</inceptionYear>
     <organization>
-        <name>Observatoire Thonier - IRD</name>
-        <url>http://www.ird.fr/</url>
+        <name>Ob7 - IRD</name>
+        <url>https://www.ob7.ird.fr/</url>
     </organization>
     <licenses>
         <license>
