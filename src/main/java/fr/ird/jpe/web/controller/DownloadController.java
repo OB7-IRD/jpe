@@ -65,6 +65,9 @@ public class DownloadController {
         // construct the complete absolute path of the file
         String fullPath = filePath;
         File downloadFile = new File(fullPath);
+        if(!downloadFile.exists()){
+            throw new IOException("The file does'n exist.");
+        }
         FileInputStream inputStream = new FileInputStream(downloadFile);
 
         // get MIME type of the file
@@ -76,7 +79,7 @@ public class DownloadController {
             mimeType = "application/octet-stream";
         }
 
-        System.out.println("MIME type: " + mimeType);
+        //System.out.println("MIME type: " + mimeType);
 
         // set content attributes for the response
         response.setContentType(mimeType);
